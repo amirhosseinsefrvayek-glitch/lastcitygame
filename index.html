@@ -14,6 +14,7 @@
             --neon-pink: #ff2e97;
             --neon-yellow: #ffd60a;
             --neon-green: #06ffa5;
+            --neon-orange: #ff8c42;
             --bg-dark: #05060f;
             --text: #ffffff;
             --text-dim: #8888aa;
@@ -31,7 +32,6 @@
             font-family: 'Vazirmatn', sans-serif;
             overflow: hidden;
             min-height: 100vh;
-            position: relative;
         }
 
         .bg-fx {
@@ -84,6 +84,7 @@
         .screen.active { display: flex; animation: screenIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         @keyframes screenIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
+        /* Language */
         .lang-box { text-align: center; max-width: 500px; width: 100%; }
         .lang-logo { font-size: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 40px var(--neon-cyan)); animation: logoFloat 3s infinite ease-in-out; }
         @keyframes logoFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
@@ -105,7 +106,6 @@
         @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
         .lang-sub { font-size: 14px; color: var(--text-dim); letter-spacing: 3px; margin-bottom: 50px; font-family: 'Orbitron', sans-serif; }
-
         .lang-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
         .lang-card {
@@ -117,34 +117,21 @@
             padding: 35px 20px;
             cursor: pointer;
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lang-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: -1;
         }
 
         .lang-card:hover { transform: translateY(-8px); border-color: var(--neon-cyan); box-shadow: 0 20px 60px rgba(0, 240, 255, 0.3); }
-        .lang-card:hover::before { opacity: 0.1; }
         .lang-flag { font-size: 48px; display: block; margin-bottom: 12px; transition: transform 0.3s; }
         .lang-card:hover .lang-flag { transform: scale(1.15); }
-        .lang-name { font-size: 20px; font-weight: 800; color: var(--text); }
+        .lang-name { font-size: 20px; font-weight: 800; }
         .lang-native { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
 
+        /* Name */
         .name-box {
             text-align: center;
             max-width: 500px;
             width: 100%;
             background: var(--glass-strong);
             backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 45px 35px;
@@ -194,8 +181,8 @@
             margin-bottom: 20px;
         }
 
-        .name-input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.15), 0 0 30px rgba(0, 240, 255, 0.3); }
-        .name-input::placeholder { color: var(--text-dark); font-weight: 500; }
+        .name-input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.15); }
+        .name-input::placeholder { color: var(--text-dark); }
 
         .name-btn {
             width: 100%;
@@ -215,19 +202,18 @@
         .name-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0, 240, 255, 0.5); }
         .name-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+        /* Guide */
         .guide-box {
             max-width: 600px;
             width: 100%;
             background: var(--glass-strong);
             backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 40px 35px;
-            position: relative;
-            overflow: hidden;
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
 
         .guide-box::before {
@@ -275,7 +261,6 @@
             border-radius: 10px;
             margin-bottom: 8px;
             font-size: 14px;
-            color: var(--text);
         }
 
         .key {
@@ -295,7 +280,7 @@
             flex-shrink: 0;
         }
 
-        .guide-text { flex: 1; color: var(--text); font-weight: 500; }
+        .guide-text { flex: 1; }
 
         .guide-btn {
             width: 100%;
@@ -332,10 +317,9 @@
             gap: 12px;
         }
 
-        .hud-player, .hud-time, .hud-money {
+        .hud-player, .hud-time, .hud-money, .hud-clue {
             background: var(--glass);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 10px 16px;
@@ -359,7 +343,7 @@
         }
 
         .hud-player-info { display: flex; flex-direction: column; }
-        .hud-player-name { font-size: 14px; font-weight: 800; color: var(--text); }
+        .hud-player-name { font-size: 14px; font-weight: 800; }
         .hud-player-status { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
 
         .hud-time { text-align: center; min-width: 100px; }
@@ -379,6 +363,20 @@
         .hud-money-icon { font-size: 18px; }
         .hud-money-value { font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 900; color: var(--neon-yellow); text-shadow: 0 0 15px var(--neon-yellow); }
 
+        .hud-clue {
+            position: absolute;
+            top: 90px;
+            left: 20px;
+            max-width: 300px;
+            border-color: var(--neon-yellow);
+            box-shadow: 0 0 30px rgba(255, 214, 10, 0.2);
+            display: none;
+        }
+
+        .hud-clue.show { display: block; }
+        .hud-clue-title { font-size: 10px; color: var(--neon-yellow); letter-spacing: 2px; font-weight: 800; margin-bottom: 4px; }
+        .hud-clue-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+
         .hud-bottom {
             position: absolute;
             bottom: 20px;
@@ -397,7 +395,6 @@
             justify-content: center;
             background: var(--glass);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 12px;
             cursor: pointer;
@@ -416,7 +413,6 @@
             transform: translateX(-50%);
             background: var(--glass-strong);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--neon-cyan);
             border-radius: 14px;
             padding: 12px 22px;
@@ -425,20 +421,13 @@
             gap: 10px;
             font-size: 14px;
             font-weight: 700;
-            color: var(--text);
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
-            animation: promptPulse 2s infinite;
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
         }
 
         .interact-prompt.show { opacity: 1; }
-
-        @keyframes promptPulse {
-            0%, 100% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
-            50% { box-shadow: 0 0 45px rgba(0, 240, 255, 0.7); }
-        }
 
         .crosshair {
             position: absolute;
@@ -450,7 +439,6 @@
             background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
-            pointer-events: none;
             opacity: 0;
         }
 
@@ -484,6 +472,7 @@
 
         .loading-text { font-family: 'Orbitron', monospace; font-size: 12px; letter-spacing: 4px; color: var(--neon-cyan); }
 
+        /* Dialog */
         .dialog-box {
             position: fixed;
             bottom: 100px;
@@ -493,7 +482,6 @@
             width: calc(100% - 40px);
             background: var(--glass-strong);
             backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--neon-cyan);
             border-radius: 20px;
             padding: 20px 24px;
@@ -506,7 +494,7 @@
         @keyframes dialogIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
         .dialog-name { font-size: 13px; font-weight: 900; color: var(--neon-cyan); letter-spacing: 1.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .dialog-text { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 15px; }
+        .dialog-text { font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
         .dialog-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
         .dialog-btn {
@@ -522,8 +510,36 @@
             transition: all 0.2s;
         }
 
-        .dialog-btn:hover { background: rgba(0, 240, 255, 0.2); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); }
+        .dialog-btn:hover { background: rgba(0, 240, 255, 0.2); transform: translateY(-2px); }
+        .dialog-btn.choice { background: rgba(255, 214, 10, 0.1); border-color: var(--neon-yellow); color: var(--neon-yellow); }
+        .dialog-btn.choice:hover { background: rgba(255, 214, 10, 0.2); }
 
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-strong);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--neon-yellow);
+            border-radius: 16px;
+            padding: 16px 24px;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 0 50px rgba(255, 214, 10, 0.4);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .notification.show { display: block; animation: notifIn 0.5s; }
+        @keyframes notifIn { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+        .notif-icon { font-size: 32px; margin-bottom: 8px; }
+        .notif-title { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; color: var(--neon-yellow); margin-bottom: 6px; letter-spacing: 1px; }
+        .notif-text { font-size: 14px; color: var(--text); }
+
+        /* Mobile */
         .mobile-controls {
             position: fixed;
             bottom: 0;
@@ -575,15 +591,11 @@
             color: var(--neon-cyan);
             font-size: 24px;
             pointer-events: auto;
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
             touch-action: none;
         }
 
         .mobile-btn.interact { bottom: 150px; right: 40px; }
         .mobile-btn.jump { bottom: 60px; right: 40px; }
-        .mobile-btn:active { background: rgba(0, 240, 255, 0.3); transform: scale(0.95); }
 
         @media (max-width: 768px) {
             .mobile-controls.active { display: block; }
@@ -592,6 +604,7 @@
             .hud-clock { font-size: 18px; }
             .hud-player-name { font-size: 12px; }
             .hud-avatar { width: 30px; height: 30px; font-size: 14px; }
+            .hud-clue { top: 80px; left: 12px; right: 12px; max-width: none; }
         }
 
         @media (min-width: 769px) { .mobile-controls { display: none !important; } }
@@ -609,7 +622,6 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
     </style>
 </head>
 <body>
@@ -626,7 +638,7 @@
         <div class="loading-text">LOADING...</div>
     </div>
 
-    <!-- LANGUAGE SCREEN -->
+    <!-- LANGUAGE -->
     <div class="screen active" id="screen-lang">
         <div class="lang-box">
             <div class="lang-logo">🌃</div>
@@ -647,7 +659,7 @@
         </div>
     </div>
 
-    <!-- NAME SCREEN -->
+    <!-- NAME -->
     <div class="screen" id="screen-name">
         <div class="name-box">
             <div class="name-icon">👤</div>
@@ -660,7 +672,7 @@
         </div>
     </div>
 
-    <!-- GUIDE SCREEN -->
+    <!-- GUIDE -->
     <div class="screen" id="screen-guide">
         <div class="guide-box">
             <h2 class="guide-title" id="guideTitle">راهنما</h2>
@@ -668,29 +680,26 @@
 
             <div class="guide-section">
                 <div class="guide-section-title"><span>🎮</span><span id="gControlTitle">کنترل‌ها</span></div>
-                <div class="guide-item">
-                    <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span>
-                    <span class="guide-text" id="gMove">حرکت در شهر</span>
-                </div>
+                <div class="guide-item"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span><span class="guide-text" id="gMove">حرکت</span></div>
                 <div class="guide-item"><span class="key">🖱️</span><span class="guide-text" id="gLook">چرخش دوربین</span></div>
-                <div class="guide-item"><span class="key">E</span><span class="guide-text" id="gInteract">تعامل با NPC / ورود به ساختمان</span></div>
+                <div class="guide-item"><span class="key">E</span><span class="guide-text" id="gInteract">تعامل با NPC</span></div>
                 <div class="guide-item"><span class="key">Shift</span><span class="guide-text" id="gRun">دویدن</span></div>
-                <div class="guide-item"><span class="key">Esc</span><span class="guide-text" id="gPause">منو / توقف</span></div>
+                <div class="guide-item"><span class="key">Esc</span><span class="guide-text" id="gPause">منو</span></div>
             </div>
 
             <div class="guide-section">
                 <div class="guide-section-title"><span>🎯</span><span id="gGoalTitle">هدف بازی</span></div>
-                <div class="guide-item"><span>🌆</span><span class="guide-text" id="gGoal1">در شهر حرکت کن و با NPCها صحبت کن</span></div>
-                <div class="guide-item"><span>🔍</span><span class="guide-text" id="gGoal2">سرنخ‌ها رو پیدا کن تا راز شهر رو بفهمی</span></div>
-                <div class="guide-item"><span>💰</span><span class="guide-text" id="gGoal3">کار کن، پول دربیار، و زندگی‌ات رو بساز</span></div>
-                <div class="guide-item"><span>🌙</span><span class="guide-text" id="gGoal4">ساعت ۰۰:۰۰ — شهر تغییر می‌کنه!</span></div>
+                <div class="guide-item"><span>🔍</span><span class="guide-text" id="gGoal1">پیدا کردن ۵ سرنخ از ۱۵ NPC</span></div>
+                <div class="guide-item"><span>🗝️</span><span class="guide-text" id="gGoal2">حل راز شهر و پیدا کردن کد مخفی</span></div>
+                <div class="guide-item"><span>🌙</span><span class="guide-text" id="gGoal3">ساعت ۱۲ شب شهر تغییر می‌کنه — حواست باشه!</span></div>
+                <div class="guide-item"><span>⚔️</span><span class="guide-text" id="gGoal4">در پایان باید یه انتخاب سخت بکنی</span></div>
             </div>
 
             <div class="guide-section">
                 <div class="guide-section-title"><span>💡</span><span id="gTipsTitle">نکات</span></div>
-                <div class="guide-item"><span>💾</span><span class="guide-text" id="gTip1">بازی خودکار ذخیره می‌شه</span></div>
-                <div class="guide-item"><span>🕐</span><span class="guide-text" id="gTip2">۱ روز = ۳۰ ثانیه واقعی</span></div>
-                <div class="guide-item"><span>📱</span><span class="guide-text" id="gTip3">روی موبایل هم کار می‌کنه (جوی‌استیک)</span></div>
+                <div class="guide-item"><span>💾</span><span class="guide-text" id="gTip1">پیشرفت خودکار ذخیره می‌شه</span></div>
+                <div class="guide-item"><span>🕐</span><span class="guide-text" id="gTip2">۱ روز = ۳ دقیقه واقعی</span></div>
+                <div class="guide-item"><span>📱</span><span class="guide-text" id="gTip3">روی موبایل هم کار می‌کنه</span></div>
             </div>
 
             <button class="guide-btn" id="guideBtn" onclick="startGame()">
@@ -701,6 +710,7 @@
 
     <div id="gameCanvas"></div>
 
+    <!-- HUD -->
     <div class="hud" id="hud">
         <div class="hud-top">
             <div class="hud-player">
@@ -716,35 +726,49 @@
             </div>
             <div class="hud-money">
                 <div class="hud-money-icon">💰</div>
-                <div class="hud-money-value" id="hudMoney">$2,450</div>
+                <div class="hud-money-value" id="hudMoney">$500</div>
             </div>
         </div>
+
+        <div class="hud-clue" id="hudClue">
+            <div class="hud-clue-title" id="clueTitle">🔍 سرنخ</div>
+            <div class="hud-clue-text" id="clueText"></div>
+        </div>
+
         <div class="crosshair" id="crosshair"></div>
+
         <div class="interact-prompt" id="interactPrompt">
             <span class="key">E</span>
             <span id="interactText">تعامل</span>
         </div>
+
         <div class="hud-bottom">
-            <button class="hud-btn" onclick="toggleGuide()" title="راهنما">❓</button>
+            <button class="hud-btn" onclick="showClues()" title="سرنخ‌ها">🔍</button>
             <button class="hud-btn" onclick="saveGame()" title="ذخیره">💾</button>
             <button class="hud-btn" onclick="openPause()" title="منو">⏸️</button>
         </div>
     </div>
 
+    <!-- NOTIFICATION -->
+    <div class="notification" id="notification">
+        <div class="notif-icon" id="notifIcon">🔍</div>
+        <div class="notif-title" id="notifTitle">سرنخ جدید!</div>
+        <div class="notif-text" id="notifText"></div>
+    </div>
+
+    <!-- MOBILE -->
     <div class="mobile-controls" id="mobileControls">
         <div class="joystick" id="joystick">
             <div class="joystick-knob" id="joystickKnob"></div>
         </div>
         <div class="mobile-btn interact" id="mobileInteract">🤝</div>
-        <div class="mobile-btn jump" id="mobileJump">⬆️</div>
     </div>
 
+    <!-- DIALOG -->
     <div class="dialog-box" id="dialogBox">
         <div class="dialog-name" id="dialogName"><span>👤</span><span>NPC</span></div>
-        <div class="dialog-text" id="dialogText">سلام!</div>
-        <div class="dialog-actions" id="dialogActions">
-            <button class="dialog-btn" onclick="closeDialog()">خداحافظ</button>
-        </div>
+        <div class="dialog-text" id="dialogText"></div>
+        <div class="dialog-actions" id="dialogActions"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
@@ -755,57 +779,73 @@
         const T = {
             fa: {
                 nameTitle: 'نام تو چیست؟',
-                nameSub: 'این اسم توی شهر شناخته می‌شه',
-                namePlaceholder: 'نام...',
+                nameSub: 'تو یه کارآگاهی توی این شهر',
                 nameBtn: 'ادامه',
                 guideTitle: 'راهنما',
-                guideSub: 'قبل از ورود به شهر، اینا رو بدان',
+                guideSub: 'راز شهر رو کشف کن',
                 gControlTitle: 'کنترل‌ها',
-                gMove: 'حرکت در شهر',
+                gMove: 'حرکت',
                 gLook: 'چرخش دوربین',
-                gInteract: 'تعامل با NPC / ورود به ساختمان',
+                gInteract: 'تعامل با NPC',
                 gRun: 'دویدن',
-                gPause: 'منو / توقف',
+                gPause: 'منو',
                 gGoalTitle: 'هدف بازی',
-                gGoal1: 'در شهر حرکت کن و با NPCها صحبت کن',
-                gGoal2: 'سرنخ‌ها رو پیدا کن تا راز شهر رو بفهمی',
-                gGoal3: 'کار کن، پول دربیار، و زندگی‌ات رو بساز',
-                gGoal4: 'ساعت ۰۰:۰۰ — شهر تغییر می‌کنه!',
+                gGoal1: 'پیدا کردن ۵ سرنخ از ۱۵ NPC',
+                gGoal2: 'حل راز شهر و پیدا کردن کد مخفی',
+                gGoal3: 'ساعت ۱۲ شب شهر تغییر می‌کنه',
+                gGoal4: 'در پایان باید یه انتخاب سخت بکنی',
                 gTipsTitle: 'نکات',
-                gTip1: 'بازی خودکار ذخیره می‌شه',
-                gTip2: '۱ روز = ۳۰ ثانیه واقعی',
-                gTip3: 'روی موبایل هم کار می‌کنه (جوی‌استیک)',
+                gTip1: 'پیشرفت خودکار ذخیره می‌شه',
+                gTip2: '۱ روز = ۳ دقیقه واقعی',
+                gTip3: 'روی موبایل هم کار می‌کنه',
                 guideBtn: '🌆 ورود به شهر',
                 statusOnline: 'آنلاین',
                 interact: 'تعامل',
-                dayNames: ['روز ۱', 'روز ۲', 'روز ۳', 'روز ۴', 'روز ۵', 'روز ۶', 'روز ۷']
+                dayNames: ['روز ۱', 'روز ۲', 'روز ۳', 'روز ۴', 'روز ۵', 'روز ۶', 'روز ۷'],
+                clue: 'سرنخ',
+                close: 'بستن',
+                goodbye: 'خداحافظ',
+                clueSaved: 'این سرنخ ثبت شد!',
+                allClues: 'همه ۵ سرنخ رو پیدا کردی! حالا برو سمت شرکت و کد رو وارد کن.',
+                codeFound: 'کد مخفی: 1379',
+                askCode: 'کد رو می‌دونی؟',
+                wrongCode: 'کد اشتباهه!',
+                rightCode: 'کد درسته! در باز شد!'
             },
             en: {
                 nameTitle: 'What is your name?',
-                nameSub: 'This name will be known in the city',
-                namePlaceholder: 'Name...',
+                nameSub: 'You are a detective in this city',
                 nameBtn: 'Continue',
                 guideTitle: 'Guide',
-                guideSub: 'Before entering the city, know these',
+                guideSub: 'Uncover the city\'s secret',
                 gControlTitle: 'Controls',
-                gMove: 'Move in the city',
+                gMove: 'Move',
                 gLook: 'Look around',
-                gInteract: 'Interact with NPC / Enter building',
+                gInteract: 'Interact with NPC',
                 gRun: 'Run',
-                gPause: 'Pause / Menu',
+                gPause: 'Menu',
                 gGoalTitle: 'Game Goal',
-                gGoal1: 'Move in the city and talk to NPCs',
-                gGoal2: 'Find clues to understand the city mystery',
-                gGoal3: 'Work, earn money, and build your life',
-                gGoal4: '00:00 — The city changes!',
+                gGoal1: 'Find 5 clues from 15 NPCs',
+                gGoal2: 'Solve the city mystery and find the code',
+                gGoal3: 'At 12 AM the city changes',
+                gGoal4: 'You must make a difficult choice at the end',
                 gTipsTitle: 'Tips',
-                gTip1: 'Game auto-saves',
-                gTip2: '1 day = 30 real seconds',
-                gTip3: 'Works on mobile too (joystick)',
-                guideBtn: '🌆 Enter the City',
+                gTip1: 'Progress auto-saves',
+                gTip2: '1 day = 3 real minutes',
+                gTip3: 'Works on mobile too',
+                guideBtn: '🌆 Enter City',
                 statusOnline: 'ONLINE',
                 interact: 'Interact',
-                dayNames: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7']
+                dayNames: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                clue: 'CLUE',
+                close: 'Close',
+                goodbye: 'Goodbye',
+                clueSaved: 'Clue saved!',
+                allClues: 'You found all 5 clues! Now go to the Company and enter the code.',
+                codeFound: 'Secret code: 1379',
+                askCode: 'Do you know the code?',
+                wrongCode: 'Wrong code!',
+                rightCode: 'Correct! Door opened!'
             }
         };
 
@@ -820,41 +860,54 @@
         const gameState = {
             player: {
                 name: 'Player',
-                money: 2450,
-                position: { x: 0, y: 1.7, z: 0 },
-                rotation: { x: 0, y: 0 },
+                money: 500,
+                position: { x: 0, y: 0, z: 0 },
+                rotation: { y: 0 },
                 isRunning: false,
                 speed: 6,
-                runSpeed: 10
+                runSpeed: 10,
+                hasClue: []
             },
             time: {
                 hours: 8,
                 minutes: 0,
                 day: 1,
-                dayLength: 30,
+                dayLength: 180,   // 3 minutes = 1 day
                 elapsed: 0
             },
             controls: {
                 keys: {},
                 isLocked: false
+            },
+            story: {
+                cluesFound: 0,
+                maxClues: 5,
+                codeFound: false,
+                codeEntered: false,
+                hasWon: false
             }
         };
 
         // ============================================
-        // THREE.JS SETUP
+        // THREE.JS
         // ============================================
         let scene, camera, renderer;
-        let playerMesh, groundMesh;
+        let playerGroup, groundMesh;
         let clock = new THREE.Clock();
         let ambientLight, sunLight, hemisphereLight;
         let streetLights = [];
+        let cars = [];
+        let playerLimbs = {};
 
+        // ============================================
+        // INIT THREE.JS
+        // ============================================
         function initThreeJS() {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0a0a1e);
-            scene.fog = new THREE.Fog(0x0a0a1e, 30, 150);
+            scene.fog = new THREE.Fog(0x0a0a1e, 50, 400);
 
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -867,6 +920,7 @@
             createGround();
             createPlayer();
             createEnvironment();
+            createCars();
 
             animate();
         }
@@ -879,106 +933,208 @@
             scene.add(hemisphereLight);
 
             sunLight = new THREE.DirectionalLight(0xffffff, 1);
-            sunLight.position.set(30, 50, 30);
+            sunLight.position.set(50, 100, 50);
             sunLight.castShadow = true;
             sunLight.shadow.mapSize.width = 2048;
             sunLight.shadow.mapSize.height = 2048;
             sunLight.shadow.camera.near = 0.5;
-            sunLight.shadow.camera.far = 200;
-            sunLight.shadow.camera.left = -80;
-            sunLight.shadow.camera.right = 80;
-            sunLight.shadow.camera.top = 80;
-            sunLight.shadow.camera.bottom = -80;
+            sunLight.shadow.camera.far = 500;
+            sunLight.shadow.camera.left = -250;
+            sunLight.shadow.camera.right = 250;
+            sunLight.shadow.camera.top = 250;
+            sunLight.shadow.camera.bottom = -250;
             scene.add(sunLight);
         }
 
+        // ============================================
+        // GROUND — 1500x1500 with 5 districts
+        // ============================================
         function createGround() {
-            const groundGeo = new THREE.PlaneGeometry(400, 400);
+            // Main ground
+            const groundGeo = new THREE.PlaneGeometry(1500, 1500);
             const groundMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, roughness: 0.9, metalness: 0.1 });
             groundMesh = new THREE.Mesh(groundGeo, groundMat);
             groundMesh.rotation.x = -Math.PI / 2;
             groundMesh.receiveShadow = true;
             scene.add(groundMesh);
 
-            const gridHelper = new THREE.GridHelper(400, 100, 0x00f0ff, 0x00f0ff);
-            gridHelper.material.opacity = 0.15;
-            gridHelper.material.transparent = true;
-            gridHelper.position.y = 0.01;
-            scene.add(gridHelper);
+            // 5 districts - different colored platforms
+            const districts = [
+                { color: 0x2a1a3e, pos: [0, 0.01, 0], size: [400, 400] },        // Center
+                { color: 0x1a2a3e, pos: [-450, 0.01, -450], size: [500, 500] }, // NW
+                { color: 0x3e1a2a, pos: [450, 0.01, -450], size: [500, 500] },  // NE
+                { color: 0x2a3e1a, pos: [-450, 0.01, 450], size: [500, 500] },  // SW
+                { color: 0x3e2a1a, pos: [450, 0.01, 450], size: [500, 500] }    // SE
+            ];
 
-            createRoadLines();
-        }
-
-        function createRoadLines() {
-            const roadMat = new THREE.MeshStandardMaterial({
-                color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.8,
-                transparent: true, opacity: 0.5
+            districts.forEach(d => {
+                const geo = new THREE.PlaneGeometry(d.size[0], d.size[1]);
+                const mat = new THREE.MeshStandardMaterial({ color: d.color, roughness: 0.9 });
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.rotation.x = -Math.PI / 2;
+                mesh.position.set(d.pos[0], d.pos[1], d.pos[2]);
+                mesh.receiveShadow = true;
+                scene.add(mesh);
             });
 
-            for (let i = -4; i <= 4; i++) {
-                if (i === 0) continue;
-                const hLine = new THREE.Mesh(new THREE.BoxGeometry(380, 0.05, 0.3), roadMat);
-                hLine.position.set(0, 0.02, i * 20);
-                scene.add(hLine);
-                const vLine = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.05, 380), roadMat);
-                vLine.position.set(i * 20, 0.02, 0);
-                scene.add(vLine);
+            // Roads (grid)
+            createRoads();
+        }
+
+        function createRoads() {
+            const roadMat = new THREE.MeshStandardMaterial({ color: 0x0a0a1a, roughness: 0.95 });
+
+            // Horizontal roads
+            for (let i = -3; i <= 3; i++) {
+                const road = new THREE.Mesh(new THREE.BoxGeometry(1500, 0.05, 20), roadMat);
+                road.position.set(0, 0.02, i * 200);
+                road.receiveShadow = true;
+                scene.add(road);
+            }
+
+            // Vertical roads
+            for (let i = -3; i <= 3; i++) {
+                const road = new THREE.Mesh(new THREE.BoxGeometry(20, 0.05, 1500), roadMat);
+                road.position.set(i * 200, 0.02, 0);
+                road.receiveShadow = true;
+                scene.add(road);
+            }
+
+            // Road lines (yellow)
+            const lineMat = new THREE.MeshStandardMaterial({ color: 0xffd60a, emissive: 0xffd60a, emissiveIntensity: 0.5 });
+
+            for (let i = -3; i <= 3; i++) {
+                for (let j = -15; j <= 15; j++) {
+                    if (Math.abs(j) < 1) continue;
+                    
+                    // Horizontal lines
+                    const hLine = new THREE.Mesh(new THREE.BoxGeometry(8, 0.03, 0.3), lineMat);
+                    hLine.position.set(j * 30, 0.04, i * 200);
+                    scene.add(hLine);
+                    
+                    // Vertical lines
+                    const vLine = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.03, 8), lineMat);
+                    vLine.position.set(i * 200, 0.04, j * 30);
+                    scene.add(vLine);
+                }
             }
         }
 
+        // ============================================
+        // PLAYER — Human-like Low-Poly
+        // ============================================
         function createPlayer() {
-            const bodyGeo = new THREE.BoxGeometry(1, 1.8, 0.6);
-            const bodyMat = new THREE.MeshStandardMaterial({
-                color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.6,
-                metalness: 0.7, roughness: 0.3
-            });
-            playerMesh = new THREE.Mesh(bodyGeo, bodyMat);
-            playerMesh.position.set(0, 0.9, 0);
-            playerMesh.castShadow = true;
+            playerGroup = new THREE.Group();
+            playerGroup.position.set(0, 0, 0);
+            scene.add(playerGroup);
 
-            const headGeo = new THREE.SphereGeometry(0.35, 16, 16);
-            const headMat = new THREE.MeshStandardMaterial({
-                color: 0xb537f2, emissive: 0xb537f2, emissiveIntensity: 0.5,
-                metalness: 0.6, roughness: 0.3
+            // Body (torso)
+            const torsoGeo = new THREE.BoxGeometry(0.7, 1.0, 0.4);
+            const torsoMat = new THREE.MeshStandardMaterial({
+                color: 0x00f0ff,
+                emissive: 0x00f0ff,
+                emissiveIntensity: 0.3,
+                metalness: 0.6,
+                roughness: 0.4
             });
+            const torso = new THREE.Mesh(torsoGeo, torsoMat);
+            torso.position.set(0, 1.2, 0);
+            torso.castShadow = true;
+            playerGroup.add(torso);
+
+            // Head
+            const headGeo = new THREE.SphereGeometry(0.28, 16, 16);
+            const headMat = new THREE.MeshStandardMaterial({ color: 0xffd0a8, roughness: 0.6 });
             const head = new THREE.Mesh(headGeo, headMat);
-            head.position.set(0, 1.4, 0);
+            head.position.set(0, 2.0, 0);
             head.castShadow = true;
-            playerMesh.add(head);
+            playerGroup.add(head);
 
-            const eyeGeo = new THREE.SphereGeometry(0.06, 8, 8);
-            const eyeMat = new THREE.MeshStandardMaterial({ color: 0xff2e97, emissive: 0xff2e97, emissiveIntensity: 1 });
-            
-            const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-            leftEye.position.set(-0.12, 1.45, 0.3);
-            playerMesh.add(leftEye);
-            
-            const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-            rightEye.position.set(0.12, 1.45, 0.3);
-            playerMesh.add(rightEye);
+            // Hair (helmet style)
+            const hairGeo = new THREE.SphereGeometry(0.3, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.6);
+            const hairMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, roughness: 0.9 });
+            const hair = new THREE.Mesh(hairGeo, hairMat);
+            hair.position.set(0, 2.05, 0);
+            hair.castShadow = true;
+            playerGroup.add(hair);
 
-            const playerLight = new THREE.PointLight(0x00f0ff, 1.5, 15, 2);
-            playerLight.position.set(0, 2, 0);
-            playerMesh.add(playerLight);
+            // Eyes
+            const eyeGeo = new THREE.SphereGeometry(0.05, 8, 8);
+            const eyeWhiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            const eyeBlackMat = new THREE.MeshStandardMaterial({ color: 0x000000 });
 
-            scene.add(playerMesh);
+            const leftEyeW = new THREE.Mesh(eyeGeo, eyeWhiteMat);
+            leftEyeW.position.set(-0.1, 2.0, 0.24);
+            playerGroup.add(leftEyeW);
+
+            const rightEyeW = new THREE.Mesh(eyeGeo, eyeWhiteMat);
+            rightEyeW.position.set(0.1, 2.0, 0.24);
+            playerGroup.add(rightEyeW);
+
+            const leftEyeB = new THREE.Mesh(new THREE.SphereGeometry(0.03, 6, 6), eyeBlackMat);
+            leftEyeB.position.set(-0.1, 2.0, 0.28);
+            playerGroup.add(leftEyeB);
+
+            const rightEyeB = new THREE.Mesh(new THREE.SphereGeometry(0.03, 6, 6), eyeBlackMat);
+            rightEyeB.position.set(0.1, 2.0, 0.28);
+            playerGroup.add(rightEyeB);
+
+            // Arms
+            const armGeo = new THREE.BoxGeometry(0.18, 0.9, 0.18);
+            const armMat = new THREE.MeshStandardMaterial({ color: 0x00d0dd, roughness: 0.6 });
+
+            const leftArm = new THREE.Mesh(armGeo, armMat);
+            leftArm.position.set(-0.44, 1.2, 0);
+            leftArm.castShadow = true;
+            playerGroup.add(leftArm);
+
+            const rightArm = new THREE.Mesh(armGeo, armMat);
+            rightArm.position.set(0.44, 1.2, 0);
+            rightArm.castShadow = true;
+            playerGroup.add(rightArm);
+
+            // Legs
+            const legGeo = new THREE.BoxGeometry(0.22, 1.0, 0.22);
+            const legMat = new THREE.MeshStandardMaterial({ color: 0x2a2a4e, roughness: 0.7 });
+
+            const leftLeg = new THREE.Mesh(legGeo, legMat);
+            leftLeg.position.set(-0.18, 0.5, 0);
+            leftLeg.castShadow = true;
+            playerGroup.add(leftLeg);
+
+            const rightLeg = new THREE.Mesh(legGeo, legMat);
+            rightLeg.position.set(0.18, 0.5, 0);
+            rightLeg.castShadow = true;
+            playerGroup.add(rightLeg);
+
+            // Store limbs for animation
+            playerLimbs = { leftArm, rightArm, leftLeg, rightLeg, head, torso };
+
+            // Player light
+            const playerLight = new THREE.PointLight(0x00f0ff, 1.2, 12, 2);
+            playerLight.position.set(0, 2.5, 0);
+            playerGroup.add(playerLight);
+
             updateCameraPosition();
         }
 
         function updateCameraPosition() {
-            if (!playerMesh) return;
+            if (!playerGroup) return;
             const rot = gameState.player.rotation.y;
-            const offsetX = 0, offsetY = 3.5, offsetZ = -6;
+            const offsetX = 0, offsetY = 4.5, offsetZ = -7;
             const dx = offsetX * Math.cos(rot) + offsetZ * Math.sin(rot);
             const dz = -offsetX * Math.sin(rot) + offsetZ * Math.cos(rot);
             
-            camera.position.x = playerMesh.position.x + dx;
-            camera.position.y = playerMesh.position.y + offsetY;
-            camera.position.z = playerMesh.position.z + dz;
+            camera.position.x = playerGroup.position.x + dx;
+            camera.position.y = playerGroup.position.y + offsetY;
+            camera.position.z = playerGroup.position.z + dz;
             
-            camera.lookAt(playerMesh.position.x, playerMesh.position.y + 1.5, playerMesh.position.z);
+            camera.lookAt(playerGroup.position.x, playerGroup.position.y + 1.5, playerGroup.position.z);
         }
 
+        // ============================================
+        // ENVIRONMENT
+        // ============================================
         function createEnvironment() {
             createStreetLights();
             createBuildings();
@@ -986,174 +1142,481 @@
         }
 
         function createStreetLights() {
-            const positions = [
-                [-40, -40], [-40, 40], [40, -40], [40, 40],
-                [-40, 0], [40, 0], [0, -40], [0, 40],
-                [-20, -20], [-20, 20], [20, -20], [20, 20]
-            ];
+            const positions = [];
+            // Generate street lights along roads
+            for (let i = -3; i <= 3; i++) {
+                for (let j = -6; j <= 6; j++) {
+                    positions.push([j * 100, i * 200 + 10]);
+                    positions.push([i * 200 + 10, j * 100]);
+                }
+            }
 
             positions.forEach(([x, z]) => {
-                const poleGeo = new THREE.CylinderGeometry(0.1, 0.1, 6, 8);
-                const poleMat = new THREE.MeshStandardMaterial({ color: 0x222233, metalness: 0.8, roughness: 0.3 });
+                const poleGeo = new THREE.CylinderGeometry(0.15, 0.2, 8, 6);
+                const poleMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, metalness: 0.9, roughness: 0.3 });
                 const pole = new THREE.Mesh(poleGeo, poleMat);
-                pole.position.set(x, 3, z);
+                pole.position.set(x, 4, z);
                 pole.castShadow = true;
                 scene.add(pole);
 
-                const lampGeo = new THREE.SphereGeometry(0.3, 16, 16);
+                const lampGeo = new THREE.SphereGeometry(0.35, 12, 12);
                 const lampMat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 1 });
                 const lamp = new THREE.Mesh(lampGeo, lampMat);
-                lamp.position.set(x, 6, z);
+                lamp.position.set(x, 8, z);
                 scene.add(lamp);
 
-                const light = new THREE.PointLight(0x00f0ff, 0.8, 15, 2);
-                light.position.set(x, 6, z);
+                const light = new THREE.PointLight(0x00f0ff, 0.6, 20, 2);
+                light.position.set(x, 8, z);
                 scene.add(light);
                 
                 streetLights.push({ light, lamp });
             });
         }
 
-        // ============================================
-        // BUILDINGS
+               // ============================================
+        // BUILDINGS — 10 detailed buildings
         // ============================================
         const buildings = [];
 
         function createBuildings() {
             const buildingData = [
-                { name: { fa: 'فروشگاه', en: 'Store' }, color: 0x00f0ff, pos: [-25, 0, -25], size: [8, 6, 8] },
-                { name: { fa: 'شرکت', en: 'Company' }, color: 0xb537f2, pos: [25, 0, -25], size: [12, 15, 12] },
-                { name: { fa: 'خانه', en: 'House' }, color: 0xff2e97, pos: [-25, 0, 25], size: [6, 5, 6] },
-                { name: { fa: 'بیمارستان', en: 'Hospital' }, color: 0x06ffa5, pos: [25, 0, 25], size: [10, 8, 10] },
-                { name: { fa: 'پلیس', en: 'Police' }, color: 0x00f0ff, pos: [-50, 0, 0], size: [9, 7, 9] },
-                { name: { fa: 'پارک', en: 'Park' }, color: 0x06ffa5, pos: [50, 0, 0], size: [15, 1, 15], isPark: true },
-                { name: { fa: 'مترو', en: 'Metro' }, color: 0xffd60a, pos: [0, 0, -50], size: [7, 3, 7] }
+                { 
+                    name: { fa: 'شرکت مرکزی', en: 'Central Company' }, 
+                    color: 0x00f0ff, 
+                    pos: [200, 0, 200], 
+                    size: [30, 40, 30],
+                    type: 'company',
+                    sign: '🏢'
+                },
+                { 
+                    name: { fa: 'بیمارستان شهر', en: 'City Hospital' }, 
+                    color: 0x06ffa5, 
+                    pos: [-200, 0, -200], 
+                    size: [40, 20, 30],
+                    type: 'hospital',
+                    sign: '🏥'
+                },
+                { 
+                    name: { fa: 'ایستگاه پلیس', en: 'Police Station' }, 
+                    color: 0x00f0ff, 
+                    pos: [-200, 0, 200], 
+                    size: [25, 15, 25],
+                    type: 'police',
+                    sign: '🚔'
+                },
+                { 
+                    name: { fa: 'فروشگاه بزرگ', en: 'Supermarket' }, 
+                    color: 0xff2e97, 
+                    pos: [200, 0, -200], 
+                    size: [35, 12, 25],
+                    type: 'store',
+                    sign: '🏪'
+                },
+                { 
+                    name: { fa: 'مترو شهر', en: 'City Metro' }, 
+                    color: 0xffd60a, 
+                    pos: [0, 0, -300], 
+                    size: [20, 8, 20],
+                    type: 'metro',
+                    sign: '🚇'
+                },
+                { 
+                    name: { fa: 'کتابخانه', en: 'Library' }, 
+                    color: 0xb537f2, 
+                    pos: [-400, 0, 0], 
+                    size: [28, 18, 24],
+                    type: 'library',
+                    sign: '📚'
+                },
+                { 
+                    name: { fa: 'رستوران', en: 'Restaurant' }, 
+                    color: 0xff8c42, 
+                    pos: [400, 0, 0], 
+                    size: [22, 10, 22],
+                    type: 'restaurant',
+                    sign: '🍔'
+                },
+                { 
+                    name: { fa: 'بانک', en: 'Bank' }, 
+                    color: 0xffd60a, 
+                    pos: [0, 0, 300], 
+                    size: [26, 20, 22],
+                    type: 'bank',
+                    sign: '🏦'
+                },
+                { 
+                    name: { fa: 'برج ساعت', en: 'Clock Tower' }, 
+                    color: 0xb537f2, 
+                    pos: [0, 0, 0], 
+                    size: [15, 60, 15],
+                    type: 'tower',
+                    sign: '🕐'
+                },
+                { 
+                    name: { fa: 'مرکز خرید', en: 'Mall' }, 
+                    color: 0xff2e97, 
+                    pos: [400, 0, 400], 
+                    size: [40, 25, 40],
+                    type: 'mall',
+                    sign: '🛍️'
+                }
             ];
 
-            buildingData.forEach((data) => createBuilding(data));
+            buildingData.forEach((data, idx) => createBuilding(data, idx));
         }
 
-        function createBuilding(data) {
+        function createBuilding(data, idx) {
             const [w, h, d] = data.size;
             const [x, y, z] = data.pos;
             
-            if (data.isPark) {
-                const parkGeo = new THREE.BoxGeometry(w, 0.3, d);
-                const parkMat = new THREE.MeshStandardMaterial({ color: 0x1a4a1a, roughness: 0.9 });
-                const park = new THREE.Mesh(parkGeo, parkMat);
-                park.position.set(x, 0.15, z);
-                park.receiveShadow = true;
-                scene.add(park);
+            const group = new THREE.Group();
+            group.position.set(x, 0, z);
+            scene.add(group);
 
-                for (let i = 0; i < 5; i++) {
-                    const treeX = x + (Math.random() - 0.5) * w * 0.7;
-                    const treeZ = z + (Math.random() - 0.5) * d * 0.7;
-                    
-                    const trunkGeo = new THREE.CylinderGeometry(0.2, 0.3, 2, 8);
-                    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4a2a1a });
-                    const trunk = new THREE.Mesh(trunkGeo, trunkMat);
-                    trunk.position.set(treeX, 1.3, treeZ);
-                    trunk.castShadow = true;
-                    scene.add(trunk);
-                    
-                    const leafGeo = new THREE.SphereGeometry(1.2, 8, 8);
-                    const leafMat = new THREE.MeshStandardMaterial({ color: 0x06ffa5, emissive: 0x06ffa5, emissiveIntensity: 0.3 });
-                    const leaf = new THREE.Mesh(leafGeo, leafMat);
-                    leaf.position.set(treeX, 3, treeZ);
-                    leaf.castShadow = true;
-                    scene.add(leaf);
-                }
+            // Main body
+            const bodyGeo = new THREE.BoxGeometry(w, h, d);
+            const bodyMat = new THREE.MeshStandardMaterial({ 
+                color: 0x2a2a4e, 
+                roughness: 0.7, 
+                metalness: 0.3 
+            });
+            const body = new THREE.Mesh(bodyGeo, bodyMat);
+            body.position.y = h / 2;
+            body.castShadow = true;
+            body.receiveShadow = true;
+            group.add(body);
 
-                buildings.push({ name: data.name, mesh: park, position: { x, z } });
-                return;
-            }
-
-            const buildingGeo = new THREE.BoxGeometry(w, h, d);
-            const buildingMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, roughness: 0.7, metalness: 0.3 });
-            const building = new THREE.Mesh(buildingGeo, buildingMat);
-            building.position.set(x, h / 2, z);
-            building.castShadow = true;
-            building.receiveShadow = true;
-            scene.add(building);
-
-            // پنجره‌ها
-            const windowMat = new THREE.MeshStandardMaterial({
-                color: data.color, emissive: data.color, emissiveIntensity: 0.8
+            // Neon edges (vertical)
+            const edgeMat = new THREE.LineBasicMaterial({ color: data.color });
+            const corners = [
+                [-w/2, -d/2], [w/2, -d/2], [-w/2, d/2], [w/2, d/2]
+            ];
+            corners.forEach(([cx, cz]) => {
+                const points = [
+                    new THREE.Vector3(cx, 0, cz),
+                    new THREE.Vector3(cx, h, cz)
+                ];
+                const geo = new THREE.BufferGeometry().setFromPoints(points);
+                const line = new THREE.Line(geo, edgeMat);
+                group.add(line);
             });
 
-            const floors = Math.floor(h / 2);
-            for (let floor = 0; floor < floors; floor++) {
-                for (let win = 0; win < 3; win++) {
-                    if (Math.random() > 0.6) continue;
+            // Windows
+            const windowMat = new THREE.MeshStandardMaterial({
+                color: data.color,
+                emissive: data.color,
+                emissiveIntensity: 0.7,
+                transparent: true,
+                opacity: 0.9
+            });
+
+            const windowRows = Math.floor(h / 3);
+            const windowCols = Math.floor(w / 3);
+
+            for (let row = 0; row < windowRows; row++) {
+                for (let col = 0; col < windowCols; col++) {
+                    // Front face
+                    if (Math.random() > 0.3) {
+                        const winGeo = new THREE.PlaneGeometry(1.5, 1.8);
+                        const win = new THREE.Mesh(winGeo, windowMat);
+                        win.position.set(
+                            -w/2 + 1.5 + col * (w / windowCols),
+                            1.5 + row * 3,
+                            d/2 + 0.01
+                        );
+                        group.add(win);
+                    }
                     
-                    const winGeo = new THREE.PlaneGeometry(0.8, 1);
-                    const winMesh = new THREE.Mesh(winGeo, windowMat);
-                    
-                    const side = Math.floor(Math.random() * 4);
-                    const offset = (win - 1) * (w / 3.5);
-                    const yPos = -h / 2 + 1.5 + floor * 2;
-                    
-                    if (side === 0) { winMesh.position.set(offset, yPos, d / 2 + 0.01); }
-                    else if (side === 1) { winMesh.position.set(offset, yPos, -d / 2 - 0.01); winMesh.rotation.y = Math.PI; }
-                    else if (side === 2) { winMesh.position.set(w / 2 + 0.01, yPos, offset); winMesh.rotation.y = Math.PI / 2; }
-                    else { winMesh.position.set(-w / 2 - 0.01, yPos, offset); winMesh.rotation.y = -Math.PI / 2; }
-                    
-                    building.add(winMesh);
+                    // Back face
+                    if (Math.random() > 0.3) {
+                        const winGeo = new THREE.PlaneGeometry(1.5, 1.8);
+                        const win = new THREE.Mesh(winGeo, windowMat);
+                        win.position.set(
+                            -w/2 + 1.5 + col * (w / windowCols),
+                            1.5 + row * 3,
+                            -d/2 - 0.01
+                        );
+                        win.rotation.y = Math.PI;
+                        group.add(win);
+                    }
                 }
             }
 
-            const signGeo = new THREE.BoxGeometry(w * 0.7, 0.8, 0.1);
-            const signMat = new THREE.MeshStandardMaterial({ color: data.color, emissive: data.color, emissiveIntensity: 1 });
+            // Side windows (left and right)
+            const sideCols = Math.floor(d / 3);
+            for (let row = 0; row < windowRows; row++) {
+                for (let col = 0; col < sideCols; col++) {
+                    if (Math.random() > 0.4) {
+                        const winGeo = new THREE.PlaneGeometry(1.5, 1.8);
+                        const winL = new THREE.Mesh(winGeo, windowMat);
+                        winL.position.set(
+                            -w/2 - 0.01,
+                            1.5 + row * 3,
+                            -d/2 + 1.5 + col * (d / sideCols)
+                        );
+                        winL.rotation.y = -Math.PI / 2;
+                        group.add(winL);
+                        
+                        const winR = new THREE.Mesh(winGeo, windowMat);
+                        winR.position.set(
+                            w/2 + 0.01,
+                            1.5 + row * 3,
+                            -d/2 + 1.5 + col * (d / sideCols)
+                        );
+                        winR.rotation.y = Math.PI / 2;
+                        group.add(winR);
+                    }
+                }
+            }
+
+            // Door (entrance)
+            const doorGeo = new THREE.BoxGeometry(2.5, 3, 0.3);
+            const doorMat = new THREE.MeshStandardMaterial({
+                color: data.color,
+                emissive: data.color,
+                emissiveIntensity: 1
+            });
+            const door = new THREE.Mesh(doorGeo, doorMat);
+            door.position.set(0, 1.5, d/2 + 0.15);
+            group.add(door);
+
+            // Roof details
+            const roofGeo = new THREE.BoxGeometry(w * 0.9, 0.5, d * 0.9);
+            const roofMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, metalness: 0.8, roughness: 0.2 });
+            const roof = new THREE.Mesh(roofGeo, roofMat);
+            roof.position.y = h + 0.25;
+            roof.castShadow = true;
+            group.add(roof);
+
+            // Antenna for tall buildings
+            if (h > 20) {
+                const antGeo = new THREE.CylinderGeometry(0.15, 0.15, 8, 6);
+                const antMat = new THREE.MeshStandardMaterial({ color: 0xff2e97, emissive: 0xff2e97, emissiveIntensity: 0.8 });
+                const ant = new THREE.Mesh(antGeo, antMat);
+                ant.position.set(0, h + 4, 0);
+                group.add(ant);
+
+                // Blinking light
+                const blipGeo = new THREE.SphereGeometry(0.3, 8, 8);
+                const blipMat = new THREE.MeshStandardMaterial({ color: 0xff2e97, emissive: 0xff2e97, emissiveIntensity: 1 });
+                const blip = new THREE.Mesh(blipGeo, blipMat);
+                blip.position.set(0, h + 8, 0);
+                group.add(blip);
+            }
+
+            // Building light
+            const light = new THREE.PointLight(data.color, 1, 40, 2);
+            light.position.set(0, h / 2, 0);
+            group.add(light);
+
+            // Sign glow on top
+            const signGeo = new THREE.BoxGeometry(w * 0.8, 1.2, 0.3);
+            const signMat = new THREE.MeshStandardMaterial({
+                color: data.color,
+                emissive: data.color,
+                emissiveIntensity: 1
+            });
             const sign = new THREE.Mesh(signGeo, signMat);
-            sign.position.set(0, h / 2 + 0.5, d / 2 + 0.05);
-            building.add(sign);
+            sign.position.set(0, h + 1.2, d/2 + 0.2);
+            group.add(sign);
 
-            const light = new THREE.PointLight(data.color, 0.8, 15, 2);
-            light.position.set(0, h / 2 + 1, 0);
-            building.add(light);
-
-            buildings.push({ name: data.name, mesh: building, position: { x, z } });
+            buildings.push({
+                name: data.name,
+                type: data.type,
+                group: group,
+                position: { x, z },
+                radius: Math.max(w, d) / 2 + 3
+            });
         }
 
         // ============================================
-        // NPCs
+        // NPCs — 15 with stories
         // ============================================
         const npcs = [];
 
         function createNPCs() {
             const npcData = [
-                { name: { fa: 'آقای رضایی', en: 'Mr. Rezaei' }, color: 0x00f0ff, pos: [-20, 0, -20], dialog: {
-                    fa: 'سلام! من صاحب فروشگاهم. هر شب یه چیزی توی این شهر عوض می‌شه... نمی‌دونم چرا.',
-                    en: 'Hi! I own the store. Something changes in this city every night... I don\'t know why.'
-                }},
-                { name: { fa: 'خانم احمدی', en: 'Mrs. Ahmadi' }, color: 0xb537f2, pos: [20, 0, -20], dialog: {
-                    fa: 'من اینجا کار می‌کنم. دیشب یه نفر اینجا بود... ولی امروز هیچ‌کس یادش نمیاد.',
-                    en: 'I work here. Last night someone was here... but today nobody remembers.'
-                }},
-                { name: { fa: 'پسر کوچیک', en: 'Little Boy' }, color: 0xff2e97, pos: [-20, 0, 20], dialog: {
-                    fa: 'من یه ساختمون دیدم که قبلاً نبود! بعدش شب ناپدید شد!',
-                    en: 'I saw a building that wasn\'t there before! Then it disappeared at night!'
-                }},
-                { name: { fa: 'دکتر', en: 'Doctor' }, color: 0x06ffa5, pos: [20, 0, 20], dialog: {
-                    fa: 'مردم میان اینجا با سردرد. میگن شب‌ها صداهایی می‌شنون...',
-                    en: 'People come here with headaches. They say they hear voices at night...'
-                }},
-                { name: { fa: 'پلیس', en: 'Police' }, color: 0x00f0ff, pos: [-45, 0, 5], dialog: {
-                    fa: 'من ۱۰ ساله اینجام. هیچ‌وقت نتونستم بفهمم این شهر چرا تغییر می‌کنه.',
-                    en: 'I\'ve been here 10 years. Never could understand why this city changes.'
-                }},
-                { name: { fa: 'پیرمرد', en: 'Old Man' }, color: 0xffd60a, pos: [45, 0, 5], dialog: {
-                    fa: 'جوون! این شهر یه رازی داره. اگه دنبال جوابی، برو سمت مترو.',
-                    en: 'Young one! This city has a secret. If you seek answers, go to the metro.'
-                }},
-                { name: { fa: 'دختر جوون', en: 'Young Girl' }, color: 0xb537f2, pos: [5, 0, -45], dialog: {
-                    fa: 'من هر شب ساعت ۱۲:۰۰ بیدار می‌شم. یه نور عجیب می‌بینم.',
-                    en: 'I wake up every night at 12:00. I see a strange light.'
-                }},
-                { name: { fa: 'نگهبان', en: 'Guard' }, color: 0xff2e97, pos: [30, 0, 0], dialog: {
-                    fa: 'اینجا همه چیز عادیه... یا شایدم نه. من فقط کارمو می‌کنم.',
-                    en: 'Everything is normal here... or maybe not. I just do my job.'
-                }}
+                // ===== سرنخ 1: پیرمرد =====
+                {
+                    name: { fa: 'پیرمرد', en: 'Old Man' },
+                    color: 0xffd60a,
+                    pos: [100, 0, 100],
+                    bodyColor: 0x8b6d3f,
+                    clue: 1,
+                    dialog: {
+                        fa: 'جوون! من ۶۰ ساله اینجام. هر شب ساعت ۱۲ یه نور از برج ساعت می‌زنه بیرون... ولی هیچ‌کس باور نمی‌کنه. برو سراغ دکتر، اونم یه چیزی دیده.',
+                        en: 'Young one! I\'ve been here 60 years. Every night at 12, a light comes from the Clock Tower... but nobody believes me. Go to the Doctor, he saw something too.'
+                    },
+                    after: {
+                        fa: 'گفتم که! برو سراغ دکتر.',
+                        en: 'I told you! Go find the Doctor.'
+                    }
+                },
+                // ===== سرنخ 2: دکتر =====
+                {
+                    name: { fa: 'دکتر مرادی', en: 'Dr. Moradi' },
+                    color: 0x06ffa5,
+                    pos: [-180, 0, -170],
+                    bodyColor: 0xffffff,
+                    clue: 2,
+                    dialog: {
+                        fa: 'من پزشکم. سه نفر از بیمارام هر شب ساعت ۱۲ بیدار می‌شن و یه چیز عجیب می‌گن... یکی از اونا توی بیمارستانه، اتاق ۷. برو باهاش حرف بزن.',
+                        en: 'I\'m a doctor. Three of my patients wake up at 12 every night and say something strange... One of them is in the hospital, room 7. Go talk to him.'
+                    },
+                    after: {
+                        fa: 'بیمار توی اتاق ۷ منتظرته.',
+                        en: 'The patient in room 7 is waiting.'
+                    }
+                },
+                // ===== سرنخ 3: بیمار =====
+                {
+                    name: { fa: 'بیمار ناشناس', en: 'Unknown Patient' },
+                    color: 0xb537f2,
+                    pos: [-220, 0, -230],
+                    bodyColor: 0xaaaaaa,
+                    clue: 3,
+                    dialog: {
+                        fa: 'ا... اون نور... من دیدمش! از برج ساعت میاد و به مترو می‌ره! شب ساعت ۱۲ برو مترو! زیرزمین، خط ۳!',
+                        en: 'Th... that light... I saw it! It comes from the Clock Tower and goes to the metro! Go to the metro at 12 AM! Basement, line 3!'
+                    },
+                    after: {
+                        fa: 'مترو... خط ۳... زیرزمین...',
+                        en: 'Metro... line 3... basement...'
+                    }
+                },
+                // ===== سرنخ 4: کارمند مترو =====
+                {
+                    name: { fa: 'نگهبان مترو', en: 'Metro Guard' },
+                    color: 0xffd60a,
+                    pos: [10, 0, -280],
+                    bodyColor: 0x444466,
+                    clue: 4,
+                    dialog: {
+                        fa: 'من هر شب ساعت ۱۲ یه صدای عجیب می‌شنوم... یه کد... سه بار تکرار می‌شه: یک، سه، هفت، نه. حالا نمی‌دونم معنیش چیه.',
+                        en: 'Every night at 12 I hear a strange sound... a code... repeated three times: one, three, seven, nine. I don\'t know what it means.'
+                    },
+                    after: {
+                        fa: 'یک، سه، هفت، نه...',
+                        en: 'One, three, seven, nine...'
+                    }
+                },
+                // ===== سرنخ 5: بانوی مرموز =====
+                {
+                    name: { fa: 'بانوی مرموز', en: 'Mysterious Woman' },
+                    color: 0xff2e97,
+                    pos: [0, 0, 200],
+                    bodyColor: 0x6b0f0f,
+                    clue: 5,
+                    dialog: {
+                        fa: 'تو دنبال حقیقتی، نه؟ شهر هر شب تغییر می‌کنه چون... چون یه آزمایشه. کد مخفی رو توی شرکت مرکزی وارد کن: 1379. اونجا همه چیز رو می‌فهمی.',
+                        en: 'You seek the truth, don\'t you? The city changes every night because... because it\'s an experiment. Enter the secret code in the Central Company: 1379. There you\'ll understand everything.'
+                    },
+                    after: {
+                        fa: 'کد 1379. شرکت مرکزی. برو!',
+                        en: 'Code 1379. Central Company. Go!'
+                    }
+                },
+                // ===== NPCهای فرعی =====
+                {
+                    name: { fa: 'صاحب فروشگاه', en: 'Store Owner' },
+                    color: 0xff2e97,
+                    pos: [200, 0, -180],
+                    bodyColor: 0xff8c42,
+                    dialog: {
+                        fa: 'سلام! هر چی بخوای دارم. ولی امروز عجیبه... دیشب یه مشتری داشتیم که امروز اصلاً وجود نداره!',
+                        en: 'Hi! I have everything you need. But today is strange... last night we had a customer who doesn\'t exist today!'
+                    }
+                },
+                {
+                    name: { fa: 'پلیس جوان', en: 'Young Cop' },
+                    color: 0x00f0ff,
+                    pos: [-180, 0, 180],
+                    bodyColor: 0x1a3a5e,
+                    dialog: {
+                        fa: 'من تازه اومدم این شهر. ولی یه چیز عجیب دیدم... یه ساختمون که دیشب بود، امروز نیست!',
+                        en: 'I just came to this city. But I saw something strange... a building that was here last night is gone today!'
+                    }
+                },
+                {
+                    name: { fa: 'کتابدار', en: 'Librarian' },
+                    color: 0xb537f2,
+                    pos: [-380, 0, 10],
+                    bodyColor: 0x4a1a6b,
+                    dialog: {
+                        fa: 'توی کتابای قدیمی یه اشاره به «آزمایش شهر» پیدا کردم. ولی صفحاتش پاره شده بود...',
+                        en: 'I found a reference to "City Experiment" in old books. But the pages were torn...'
+                    }
+                },
+                {
+                    name: { fa: 'آشپز', en: 'Chef' },
+                    color: 0xff8c42,
+                    pos: [380, 0, 10],
+                    bodyColor: 0xffffff,
+                    dialog: {
+                        fa: 'هر شب ساعت ۱۲ همه مشتریام یه لحظه محو می‌شن، بعد برمی‌گردن! باورت می‌شه؟',
+                        en: 'Every night at 12, all my customers vanish for a moment, then come back! Can you believe it?'
+                    }
+                },
+                {
+                    name: { fa: 'نگهبان بانک', en: 'Bank Guard' },
+                    color: 0xffd60a,
+                    pos: [10, 0, 280],
+                    bodyColor: 0x1a3a5e,
+                    dialog: {
+                        fa: 'بانک ما هر شب ساعت ۱۲ قفل می‌شه و صبح باز می‌شه. ولی پول‌ها جابه‌جا می‌شن!',
+                        en: 'Our bank locks at 12 every night and opens in the morning. But the money moves around!'
+                    }
+                },
+                {
+                    name: { fa: 'دختر جوون', en: 'Young Girl' },
+                    color: 0xff2e97,
+                    pos: [150, 0, -50],
+                    bodyColor: 0xffb6c1,
+                    dialog: {
+                        fa: 'من دیشب از پنجره نگاه کردم... یه نور آبی از برج ساعت رفت سمت مترو. بعد صدای زنگ شنیدم.',
+                        en: 'I looked from my window last night... a blue light went from the Clock Tower to the metro. Then I heard a bell.'
+                    }
+                },
+                {
+                    name: { fa: 'دوست فروشگاه', en: 'Store Customer' },
+                    color: 0x06ffa5,
+                    pos: [220, 0, -220],
+                    bodyColor: 0x2a5e3a,
+                    dialog: {
+                        fa: 'من هر روز اینجام. ولی امروز یه حس عجیبی دارم... انگار قبلاً این لحظه رو زندگی کردم.',
+                        en: 'I\'m here every day. But today I have a strange feeling... like I\'ve lived this moment before.'
+                    }
+                },
+                {
+                    name: { fa: 'پیرمرد کتابخوان', en: 'Old Reader' },
+                    color: 0xb537f2,
+                    pos: [-420, 0, -10],
+                    bodyColor: 0x6b4a2a,
+                    dialog: {
+                        fa: 'توی کتابای قدیمی نوشته شده: «شهر ۱۳۷۹ در آزمایشی نابود شد». ولی ما اینجاییم... ۱۴۰۰ سال بعد!',
+                        en: 'Old books say: "The city was destroyed in experiment 1379." But we\'re here... 1400 years later!'
+                    }
+                },
+                {
+                    name: { fa: 'کارمند شرکت', en: 'Company Employee' },
+                    color: 0x00f0ff,
+                    pos: [220, 0, 220],
+                    bodyColor: 0x2a2a5e,
+                    dialog: {
+                        fa: 'من توی شرکت مرکزی کار می‌کنم. زیرزمین یه چیزی هست که به همه نمی‌گن...',
+                        en: 'I work at the Central Company. There\'s something in the basement they don\'t tell everyone...'
+                    }
+                },
+                {
+                    name: { fa: 'راننده', en: 'Driver' },
+                    color: 0xff8c42,
+                    pos: [-100, 0, 50],
+                    bodyColor: 0x3a3a3a,
+                    dialog: {
+                        fa: 'من ۲۰ ساله رانندگیم. هر شب ساعت ۱۲ یه لحظه چراغ‌ها خاموش می‌شن، بعد روشن می‌شن. همیشه.',
+                        en: 'I\'ve been driving for 20 years. Every night at 12, lights go off for a moment, then turn on. Always.'
+                    }
+                }
             ];
 
             npcData.forEach(data => createNPC(data));
@@ -1162,49 +1625,177 @@
         function createNPC(data) {
             const [x, y, z] = data.pos;
             
-            const bodyGeo = new THREE.BoxGeometry(0.6, 1.5, 0.4);
-            const bodyMat = new THREE.MeshStandardMaterial({
-                color: data.color, emissive: data.color, emissiveIntensity: 0.4,
-                metalness: 0.5, roughness: 0.4
+            const group = new THREE.Group();
+            group.position.set(x, 0, z);
+            scene.add(group);
+
+            // Body (torso)
+            const torsoGeo = new THREE.BoxGeometry(0.7, 1.0, 0.4);
+            const torsoMat = new THREE.MeshStandardMaterial({
+                color: data.bodyColor,
+                emissive: data.bodyColor,
+                emissiveIntensity: 0.1,
+                roughness: 0.7
             });
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.set(x, 0.75, z);
-            body.castShadow = true;
-            scene.add(body);
+            const torso = new THREE.Mesh(torsoGeo, torsoMat);
+            torso.position.y = 1.2;
+            torso.castShadow = true;
+            group.add(torso);
 
-            const headGeo = new THREE.SphereGeometry(0.25, 12, 12);
-            const headMat = new THREE.MeshStandardMaterial({ color: 0xffe0c0, roughness: 0.6 });
+            // Head
+            const headGeo = new THREE.SphereGeometry(0.28, 16, 16);
+            const headMat = new THREE.MeshStandardMaterial({ color: 0xffd0a8, roughness: 0.6 });
             const head = new THREE.Mesh(headGeo, headMat);
-            head.position.set(x, 1.75, z);
+            head.position.y = 2.0;
             head.castShadow = true;
-            scene.add(head);
+            group.add(head);
 
+            // Hair
+            const hairGeo = new THREE.SphereGeometry(0.3, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.5);
+            const hairMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 });
+            const hair = new THREE.Mesh(hairGeo, hairMat);
+            hair.position.y = 2.05;
+            group.add(hair);
+
+            // Eyes
             const eyeGeo = new THREE.SphereGeometry(0.04, 6, 6);
             const eyeMat = new THREE.MeshStandardMaterial({ color: 0x000000 });
             
             const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-            leftEye.position.set(x - 0.08, 1.8, z + 0.2);
-            scene.add(leftEye);
+            leftEye.position.set(-0.1, 2.0, 0.24);
+            group.add(leftEye);
             
             const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-            rightEye.position.set(x + 0.08, 1.8, z + 0.2);
-            scene.add(rightEye);
+            rightEye.position.set(0.1, 2.0, 0.24);
+            group.add(rightEye);
 
-            const npcLight = new THREE.PointLight(data.color, 0.6, 8, 2);
-            npcLight.position.set(x, 2.2, z);
-            scene.add(npcLight);
+            // Arms
+            const armGeo = new THREE.BoxGeometry(0.18, 0.9, 0.18);
+            const armMat = new THREE.MeshStandardMaterial({ color: data.bodyColor, roughness: 0.7 });
+
+            const leftArm = new THREE.Mesh(armGeo, armMat);
+            leftArm.position.set(-0.44, 1.2, 0);
+            leftArm.castShadow = true;
+            group.add(leftArm);
+
+            const rightArm = new THREE.Mesh(armGeo, armMat);
+            rightArm.position.set(0.44, 1.2, 0);
+            rightArm.castShadow = true;
+            group.add(rightArm);
+
+            // Legs
+            const legGeo = new THREE.BoxGeometry(0.22, 1.0, 0.22);
+            const legMat = new THREE.MeshStandardMaterial({ color: 0x2a2a4e, roughness: 0.7 });
+
+            const leftLeg = new THREE.Mesh(legGeo, legMat);
+            leftLeg.position.set(-0.18, 0.5, 0);
+            leftLeg.castShadow = true;
+            group.add(leftLeg);
+
+            const rightLeg = new THREE.Mesh(legGeo, legMat);
+            rightLeg.position.set(0.18, 0.5, 0);
+            rightLeg.castShadow = true;
+            group.add(rightLeg);
+
+            // Clue indicator (glowing sphere above head if has clue)
+            if (data.clue) {
+                const indicatorGeo = new THREE.SphereGeometry(0.15, 8, 8);
+                const indicatorMat = new THREE.MeshStandardMaterial({
+                    color: 0xffd60a,
+                    emissive: 0xffd60a,
+                    emissiveIntensity: 2
+                });
+                const indicator = new THREE.Mesh(indicatorGeo, indicatorMat);
+                indicator.position.y = 2.6;
+                indicator.userData.isClue = true;
+                indicator.userData.clueNum = data.clue;
+                group.add(indicator);
+            }
+
+            // NPC light
+            const npcLight = new THREE.PointLight(data.color, 0.5, 10, 2);
+            npcLight.position.y = 2.5;
+            group.add(npcLight);
 
             npcs.push({
                 name: data.name,
                 dialog: data.dialog,
-                mesh: body,
+                after: data.after,
+                clue: data.clue,
+                group: group,
                 position: { x, z },
-                baseY: 0.75,
-                phase: Math.random() * Math.PI * 2
+                baseY: 0,
+                phase: Math.random() * Math.PI * 2,
+                talked: false
             });
         }
+
         // ============================================
-        // INPUT HANDLING
+        // CARS — moving on roads
+        // ============================================
+        function createCars() {
+            const colors = [0xff2e97, 0x00f0ff, 0xffd60a, 0x06ffa5, 0xb537f2];
+            
+            for (let i = 0; i < 20; i++) {
+                const isHorizontal = Math.random() > 0.5;
+                const laneOffset = (Math.random() > 0.5 ? 1 : -1) * 5;
+                const roadIndex = Math.floor(Math.random() * 7) - 3;
+                
+                let x, z, dirX, dirZ;
+                
+                if (isHorizontal) {
+                    z = roadIndex * 200 + laneOffset;
+                    x = (Math.random() - 0.5) * 1200;
+                    dirX = Math.random() > 0.5 ? 1 : -1;
+                    dirZ = 0;
+                } else {
+                    x = roadIndex * 200 + laneOffset;
+                    z = (Math.random() - 0.5) * 1200;
+                    dirX = 0;
+                    dirZ = Math.random() > 0.5 ? 1 : -1;
+                }
+                
+                const carGroup = new THREE.Group();
+                carGroup.position.set(x, 0.5, z);
+                
+                // Body
+                const bodyGeo = new THREE.BoxGeometry(isHorizontal ? 3 : 1.6, 0.6, isHorizontal ? 1.6 : 3);
+                const bodyMat = new THREE.MeshStandardMaterial({
+                    color: colors[i % colors.length],
+                    emissive: colors[i % colors.length],
+                    emissiveIntensity: 0.4,
+                    metalness: 0.7,
+                    roughness: 0.3
+                });
+                const body = new THREE.Mesh(bodyGeo, bodyMat);
+                body.castShadow = true;
+                carGroup.add(body);
+
+                // Cabin
+                const cabinGeo = new THREE.BoxGeometry(isHorizontal ? 1.6 : 1.2, 0.5, isHorizontal ? 1.2 : 1.6);
+                const cabinMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, metalness: 0.8, roughness: 0.2 });
+                const cabin = new THREE.Mesh(cabinGeo, cabinMat);
+                cabin.position.y = 0.55;
+                carGroup.add(cabin);
+
+                // Headlights
+                const light = new THREE.PointLight(0xffd60a, 1, 15, 2);
+                light.position.set(dirX * 2, 0.5, dirZ * 2);
+                carGroup.add(light);
+
+                // Store data
+                carGroup.userData = {
+                    dirX, dirZ,
+                    speed: 15 + Math.random() * 10,
+                    isHorizontal
+                };
+
+                scene.add(carGroup);
+                cars.push(carGroup);
+            }
+        }
+        // ============================================
+        // INPUT
         // ============================================
         function setupInput() {
             document.addEventListener('keydown', (e) => {
@@ -1229,7 +1820,8 @@
             });
 
             document.addEventListener('click', () => {
-                if (document.getElementById('hud').classList.contains('active') && !document.getElementById('dialogBox').classList.contains('active')) {
+                if (document.getElementById('hud').classList.contains('active') && 
+                    !document.getElementById('dialogBox').classList.contains('active')) {
                     if (document.body.requestPointerLock) document.body.requestPointerLock();
                 }
             });
@@ -1250,10 +1842,12 @@
         }
 
         // ============================================
-        // PLAYER MOVEMENT
+        // PLAYER MOVEMENT + ANIMATION
         // ============================================
+        let walkTime = 0;
+
         function updatePlayer(delta) {
-            if (!playerMesh) return;
+            if (!playerGroup) return;
             
             const keys = gameState.controls.keys;
             const player = gameState.player;
@@ -1276,29 +1870,95 @@
             const worldZ = -moveX * sin + moveZ * cos;
             
             const len = Math.sqrt(worldX * worldX + worldZ * worldZ);
-            if (len > 0) {
+            const isMoving = len > 0;
+            
+            if (isMoving) {
                 const nx = worldX / len;
                 const nz = worldZ / len;
                 
-                playerMesh.position.x += nx * speed * delta;
-                playerMesh.position.z += nz * speed * delta;
+                let newX = playerGroup.position.x + nx * speed * delta;
+                let newZ = playerGroup.position.z + nz * speed * delta;
                 
-                // Rotate mesh towards movement
+                // Building collision
+                buildings.forEach(b => {
+                    const dx = newX - b.position.x;
+                    const dz = newZ - b.position.z;
+                    const dist = Math.sqrt(dx * dx + dz * dz);
+                    
+                    if (dist < b.radius) {
+                        // Push back
+                        const pushX = (dx / dist) * b.radius;
+                        const pushZ = (dz / dist) * b.radius;
+                        newX = b.position.x + pushX;
+                        newZ = b.position.z + pushZ;
+                    }
+                });
+                
+                playerGroup.position.x = newX;
+                playerGroup.position.z = newZ;
+                
+                // Rotate to face movement
                 const targetRot = Math.atan2(nx, nz);
-                playerMesh.rotation.y = targetRot;
+                playerGroup.rotation.y = targetRot;
             }
             
             // Bounds
-            playerMesh.position.x = Math.max(-180, Math.min(180, playerMesh.position.x));
-            playerMesh.position.z = Math.max(-180, Math.min(180, playerMesh.position.z));
+            playerGroup.position.x = Math.max(-720, Math.min(720, playerGroup.position.x));
+            playerGroup.position.z = Math.max(-720, Math.min(720, playerGroup.position.z));
             
-            player.position.x = playerMesh.position.x;
-            player.position.z = playerMesh.position.z;
+            player.position.x = playerGroup.position.x;
+            player.position.z = playerGroup.position.z;
+            
+            // Walk animation
+            if (isMoving) {
+                walkTime += delta * (player.isRunning ? 12 : 8);
+                const swing = Math.sin(walkTime) * 0.5;
+                
+                if (playerLimbs.leftArm) playerLimbs.leftArm.rotation.x = swing;
+                if (playerLimbs.rightArm) playerLimbs.rightArm.rotation.x = -swing;
+                if (playerLimbs.leftLeg) playerLimbs.leftLeg.rotation.x = -swing;
+                if (playerLimbs.rightLeg) playerLimbs.rightLeg.rotation.x = swing;
+            } else {
+                // Reset to idle
+                if (playerLimbs.leftArm) playerLimbs.leftArm.rotation.x *= 0.9;
+                if (playerLimbs.rightArm) playerLimbs.rightArm.rotation.x *= 0.9;
+                if (playerLimbs.leftLeg) playerLimbs.leftLeg.rotation.x *= 0.9;
+                if (playerLimbs.rightLeg) playerLimbs.rightLeg.rotation.x *= 0.9;
+            }
+            
+            // Head bob
+            if (playerLimbs.torso && isMoving) {
+                playerLimbs.torso.position.y = 1.2 + Math.abs(Math.sin(walkTime * 0.5)) * 0.05;
+            }
         }
 
         // ============================================
-        // TIME / DAY-NIGHT CYCLE
+        // CAMERA
         // ============================================
+        function updateCameraPosition() {
+            if (!playerGroup) return;
+            const rot = gameState.player.rotation.y;
+            const offsetX = 0, offsetY = 4.5, offsetZ = -7;
+            const dx = offsetX * Math.cos(rot) + offsetZ * Math.sin(rot);
+            const dz = -offsetX * Math.sin(rot) + offsetZ * Math.cos(rot);
+            
+            camera.position.x = playerGroup.position.x + dx;
+            camera.position.y = playerGroup.position.y + offsetY;
+            camera.position.z = playerGroup.position.z + dz;
+            
+            camera.lookAt(
+                playerGroup.position.x,
+                playerGroup.position.y + 1.5,
+                playerGroup.position.z
+            );
+        }
+
+        // ============================================
+        // TIME / DAY-NIGHT
+        // ============================================
+        let isNight = false;
+        let lastHour = -1;
+
         function updateTime(delta) {
             const time = gameState.time;
             time.elapsed += delta;
@@ -1319,6 +1979,13 @@
                 onNewDay();
             }
             
+            // Check midnight event
+            const currentHour = Math.floor(time.hours);
+            if (currentHour === 0 && lastHour !== 0) {
+                onMidnight();
+            }
+            lastHour = currentHour;
+            
             updateDayNightCycle();
             updateClockHUD();
         }
@@ -1330,9 +1997,9 @@
             
             let sunAngle = ((totalHours - 6) / 12) * Math.PI;
             
-            const sunX = Math.cos(sunAngle) * 80;
-            const sunY = Math.sin(sunAngle) * 80 + 20;
-            const sunZ = 30;
+            const sunX = Math.cos(sunAngle) * 200;
+            const sunY = Math.sin(sunAngle) * 200 + 50;
+            const sunZ = 100;
             
             if (sunLight) {
                 sunLight.position.set(sunX, sunY, sunZ);
@@ -1346,7 +2013,7 @@
                 sunLight.intensity = intensity;
             }
             
-            const isNight = totalHours < 6 || totalHours >= 18;
+            isNight = totalHours < 6 || totalHours >= 18;
             const isSunset = (totalHours >= 17 && totalHours < 20) || (totalHours >= 4 && totalHours < 7);
             
             let skyColor, fogColor;
@@ -1376,8 +2043,6 @@
                     lamp.material.emissiveIntensity = 0.3;
                 }
             });
-            
-            gameState.world = { isNight };
         }
 
         function updateClockHUD() {
@@ -1392,65 +2057,404 @@
         }
 
         function onNewDay() {
-            console.log('🌅 New day:', gameState.time.day);
+            showNotification('🌅', 
+                currentLang === 'fa' ? 'روز جدید' : 'New Day',
+                currentLang === 'fa' ? `روز ${gameState.time.day}` : `Day ${gameState.time.day}`
+            );
+        }
+
+        function onMidnight() {
+            // City reset event!
+            showNotification('🌙', 
+                currentLang === 'fa' ? '⚠️ شهر تغییر کرد!' : '⚠️ City Changed!',
+                currentLang === 'fa' ? 'یه چیزی عوض شد...' : 'Something changed...'
+            );
+            
+            // Shake screen
+            document.body.style.animation = 'shake 1s';
+            setTimeout(() => document.body.style.animation = '', 1000);
         }
 
         // ============================================
         // INTERACTION
         // ============================================
+        let nearestNPC = null;
+        let nearestBuilding = null;
+
         function handleInteract() {
-            if (!playerMesh) return;
-            
-            let nearestNPC = null;
-            let nearestDist = 3.5;
-            
-            npcs.forEach(npc => {
-                const dx = playerMesh.position.x - npc.mesh.position.x;
-                const dz = playerMesh.position.z - npc.mesh.position.z;
-                const dist = Math.sqrt(dx * dx + dz * dz);
-                
-                if (dist < nearestDist) {
-                    nearestDist = dist;
-                    nearestNPC = npc;
-                }
-            });
+            if (!playerGroup) return;
             
             if (nearestNPC) {
-                const dialog = nearestNPC.dialog[currentLang];
-                showDialog(nearestNPC.name[currentLang], dialog);
+                openNPCDialog(nearestNPC);
+            } else if (nearestBuilding) {
+                openBuildingDialog(nearestBuilding);
             } else {
-                let nearestBuilding = null;
-                let nearestDist2 = 5;
-                
-                buildings.forEach(b => {
-                    const dx = playerMesh.position.x - b.position.x;
-                    const dz = playerMesh.position.z - b.position.z;
-                    const dist = Math.sqrt(dx * dx + dz * dz);
-                    
-                    if (dist < nearestDist2) {
-                        nearestDist2 = dist;
-                        nearestBuilding = b;
-                    }
-                });
-                
-                if (nearestBuilding) {
-                    const msg = currentLang === 'fa' 
-                        ? `این ${nearestBuilding.name.fa} هست. به زودی می‌تونی واردش شی!`
-                        : `This is a ${nearestBuilding.name.en}. You'll be able to enter soon!`;
-                    showDialog(nearestBuilding.name[currentLang], msg);
-                } else {
-                    const msg = currentLang === 'fa'
-                        ? 'چیزی نزدیکت نیست. برو جلوتر!'
-                        : 'Nothing nearby. Move closer!';
-                    showDialog(currentLang === 'fa' ? 'سیستم' : 'System', msg);
-                }
+                showDialog(
+                    currentLang === 'fa' ? 'سیستم' : 'System',
+                    currentLang === 'fa' 
+                        ? 'چیزی نزدیکت نیست. برو جلوتر!' 
+                        : 'Nothing nearby. Move closer!'
+                );
             }
         }
 
+        function checkInteraction() {
+            if (!playerGroup) return;
+            
+            nearestNPC = null;
+            nearestBuilding = null;
+            
+            let minNPCDist = 4;
+            let minBuildingDist = 15;
+            
+            npcs.forEach(npc => {
+                const dx = playerGroup.position.x - npc.position.x;
+                const dz = playerGroup.position.z - npc.position.z;
+                const dist = Math.sqrt(dx * dx + dz * dz);
+                
+                if (dist < minNPCDist) {
+                    minNPCDist = dist;
+                    nearestNPC = npc;
+                    
+                    // Rotate NPC to face player
+                    npc.group.rotation.y = Math.atan2(dx, dz);
+                }
+            });
+            
+            buildings.forEach(b => {
+                const dx = playerGroup.position.x - b.position.x;
+                const dz = playerGroup.position.z - b.position.z;
+                const dist = Math.sqrt(dx * dx + dz * dz);
+                
+                if (dist < minBuildingDist + b.radius) {
+                    if (dist < minBuildingDist) {
+                        minBuildingDist = dist;
+                        nearestBuilding = b;
+                    }
+                }
+            });
+            
+            const prompt = document.getElementById('interactPrompt');
+            const text = document.getElementById('interactText');
+            
+            if (nearestNPC) {
+                prompt.classList.add('show');
+                text.textContent = currentLang === 'fa' ? 'صحبت کن' : 'Talk';
+            } else if (nearestBuilding) {
+                prompt.classList.add('show');
+                text.textContent = currentLang === 'fa' ? 'وارد شو' : 'Enter';
+            } else {
+                prompt.classList.remove('show');
+            }
+        }
+
+        // ============================================
+        // NPC DIALOG
+        // ============================================
+        function openNPCDialog(npc) {
+            const dialogBox = document.getElementById('dialogBox');
+            const dialogName = document.getElementById('dialogName');
+            const dialogText = document.getElementById('dialogText');
+            const dialogActions = document.getElementById('dialogActions');
+            
+            // Choose which dialog to show
+            let dialogText_content;
+            if (npc.talked && npc.after) {
+                dialogText_content = npc.after[currentLang];
+            } else {
+                dialogText_content = npc.dialog[currentLang];
+                
+                // Mark as talked and register clue
+                if (!npc.talked && npc.clue) {
+                    npc.talked = true;
+                    registerClue(npc.clue);
+                }
+            }
+            
+            dialogName.innerHTML = `<span>👤</span><span>${npc.name[currentLang]}</span>`;
+            dialogText.textContent = dialogText_content;
+            
+            dialogActions.innerHTML = `
+                <button class="dialog-btn" onclick="closeDialog()">${t('goodbye')}</button>
+            `;
+            
+            dialogBox.classList.add('active');
+            
+            if (document.exitPointerLock) document.exitPointerLock();
+        }
+
+        // ============================================
+        // BUILDING DIALOG
+        // ============================================
+        function openBuildingDialog(building) {
+            const dialogBox = document.getElementById('dialogBox');
+            const dialogName = document.getElementById('dialogName');
+            const dialogText = document.getElementById('dialogText');
+            const dialogActions = document.getElementById('dialogActions');
+            
+            dialogName.innerHTML = `<span>🏢</span><span>${building.name[currentLang]}</span>`;
+            
+            // Special: Company needs code
+            if (building.type === 'company') {
+                if (gameState.story.cluesFound >= 5) {
+                    dialogText.textContent = currentLang === 'fa'
+                        ? 'در شرکت قفله. یه صفحه کلید دیجیتال هست. کد ۴ رقمی رو وارد کن:'
+                        : 'The company is locked. There\'s a digital keypad. Enter the 4-digit code:';
+                    
+                    dialogActions.innerHTML = `
+                        <input type="text" id="codeInput" placeholder="${currentLang === 'fa' ? 'کد...' : 'Code...'}" 
+                               maxlength="4" style="padding: 10px 16px; background: rgba(0,0,0,0.5); border: 2px solid #00f0ff; border-radius: 10px; color: white; font-family: 'Orbitron', monospace; font-size: 18px; text-align: center; letter-spacing: 4px; width: 120px;">
+                        <button class="dialog-btn choice" onclick="checkCode()">${currentLang === 'fa' ? 'ورود' : 'Enter'}</button>
+                        <button class="dialog-btn" onclick="closeDialog()">${t('goodbye')}</button>
+                    `;
+                } else {
+                    dialogText.textContent = currentLang === 'fa'
+                        ? `در قفله. باید اول ۵ سرنخ رو پیدا کنی. (${gameState.story.cluesFound}/5)`
+                        : `The door is locked. Find 5 clues first. (${gameState.story.cluesFound}/5)`;
+                    
+                    dialogActions.innerHTML = `
+                        <button class="dialog-btn" onclick="closeDialog()">${t('goodbye')}</button>
+                    `;
+                }
+            } else {
+                dialogText.textContent = currentLang === 'fa'
+                    ? `${building.name.fa} — اینجا فعلاً بسته است. به زودی می‌تونی واردش شی.`
+                    : `${building.name.en} — This place is closed for now. Soon you'll be able to enter.`;
+                
+                dialogActions.innerHTML = `
+                    <button class="dialog-btn" onclick="closeDialog()">${t('goodbye')}</button>
+                `;
+            }
+            
+            dialogBox.classList.add('active');
+            if (document.exitPointerLock) document.exitPointerLock();
+        }
+
+        function checkCode() {
+            const input = document.getElementById('codeInput');
+            if (!input) return;
+            
+            const code = input.value.trim();
+            
+            if (code === '1379') {
+                gameState.story.codeEntered = true;
+                gameState.story.hasWon = true;
+                
+                closeDialog();
+                
+                setTimeout(() => {
+                    showWinScreen();
+                }, 500);
+            } else {
+                input.style.borderColor = '#ff2e97';
+                input.value = '';
+                showNotification('❌', 
+                    currentLang === 'fa' ? 'کد اشتباه!' : 'Wrong Code!',
+                    currentLang === 'fa' ? 'دوباره تلاش کن' : 'Try again'
+                );
+                setTimeout(() => {
+                    input.style.borderColor = '#00f0ff';
+                }, 500);
+            }
+        }
+
+        // ============================================
+        // CLUE SYSTEM
+        // ============================================
+        function registerClue(clueNum) {
+            if (gameState.player.hasClue.includes(clueNum)) return;
+            
+            gameState.player.hasClue.push(clueNum);
+            gameState.story.cluesFound = gameState.player.hasClue.length;
+            
+            // Save
+            saveGame();
+            
+            // Show notification
+            const clueTexts = {
+                1: { fa: 'نور از برج ساعت میاد', en: 'Light from Clock Tower' },
+                2: { fa: 'بیمار اتاق ۷ چیزی می‌دونه', en: 'Patient in room 7 knows something' },
+                3: { fa: 'مترو، زیرزمین، خط ۳', en: 'Metro, basement, line 3' },
+                4: { fa: 'کد: یک، سه، هفت، نه', en: 'Code: one, three, seven, nine' },
+                5: { fa: 'کد نهایی: 1379 — شرکت مرکزی', en: 'Final code: 1379 — Central Company' }
+            };
+            
+            showNotification('🔍', 
+                currentLang === 'fa' ? `سرنخ ${clueNum}/5` : `Clue ${clueNum}/5`,
+                clueTexts[clueNum][currentLang]
+            );
+            
+            // Show HUD clue
+            document.getElementById('hudClue').classList.add('show');
+            document.getElementById('clueText').textContent = clueTexts[clueNum][currentLang];
+            
+            setTimeout(() => {
+                document.getElementById('hudClue').classList.remove('show');
+            }, 8000);
+            
+            // All clues found?
+            if (gameState.story.cluesFound >= 5) {
+                setTimeout(() => {
+                    showNotification('✨',
+                        currentLang === 'fa' ? 'همه سرنخ‌ها پیدا شد!' : 'All clues found!',
+                        currentLang === 'fa' ? 'حالا برو سمت شرکت مرکزی و کد رو وارد کن' : 'Now go to Central Company and enter the code'
+                    );
+                }, 4000);
+            }
+        }
+
+        function showClues() {
+            const clues = gameState.player.hasClue;
+            
+            let text = currentLang === 'fa' 
+                ? `سرنخ‌های پیدا شده: ${clues.length}/5\n\n` 
+                : `Clues found: ${clues.length}/5\n\n`;
+            
+            const clueTexts = {
+                1: { fa: '🔍 نور از برج ساعت میاد', en: '🔍 Light from Clock Tower' },
+                2: { fa: '🔍 بیمار اتاق ۷ چیزی می‌دونه', en: '🔍 Patient in room 7 knows something' },
+                3: { fa: '🔍 مترو، زیرزمین، خط ۳', en: '🔍 Metro, basement, line 3' },
+                4: { fa: '🔍 کد: یک، سه، هفت، نه', en: '🔍 Code: one, three, seven, nine' },
+                5: { fa: '🔍 کد نهایی: 1379', en: '🔍 Final code: 1379' }
+            };
+            
+            [1, 2, 3, 4, 5].forEach(num => {
+                if (clues.includes(num)) {
+                    text += clueTexts[num][currentLang] + '\n';
+                } else {
+                    text += (currentLang === 'fa' ? `❓ سرنخ ${num} پیدا نشده` : `❓ Clue ${num} not found`) + '\n';
+                }
+            });
+            
+            showDialog(
+                currentLang === 'fa' ? 'سرنخ‌ها' : 'Clues',
+                text
+            );
+        }
+
+        // ============================================
+        // WIN SCREEN
+        // ============================================
+        function showWinScreen() {
+            const dialogBox = document.getElementById('dialogBox');
+            const dialogName = document.getElementById('dialogName');
+            const dialogText = document.getElementById('dialogText');
+            const dialogActions = document.getElementById('dialogActions');
+            
+            dialogName.innerHTML = `<span>🎉</span><span>${currentLang === 'fa' ? 'پایان' : 'The End'}</span>`;
+            
+            dialogText.innerHTML = currentLang === 'fa'
+                ? `<strong>در باز شد!</strong><br><br>
+                توی شرکت، یه آزمایشگاه مخفی پیدا کردی.<br>
+                اونجا همه چیز رو فهمیدی:<br><br>
+                <em>«شهر LAST CITY یه شبیه‌سازی کامپیوتریه. هر شب ساعت ۱۲ ریست می‌شه تا آزمایش ادامه پیدا کنه. تو یه شخصیت توی این شبیه‌سازی هستی... یا شایدم اولین کسی که ازش بیرون زده.»</em><br><br>
+                <strong>در سمت راست یه دکمه قرمز هست: «خاموش کردن شبیه‌سازی»</strong><br>
+                <strong>در سمت چپ یه دره: «موندن در شهر»</strong><br><br>
+                <em>کدوم رو انتخاب می‌کنی؟</em>`
+                : `<strong>The door opened!</strong><br><br>
+                Inside the company, you found a secret lab.<br>
+                There you understood everything:<br><br>
+                <em>"LAST CITY is a computer simulation. Every night at 12 it resets to continue the experiment. You are a character in this simulation... or maybe the first one to break out."</em><br><br>
+                <strong>On the right, a red button: "Shut down simulation"</strong><br>
+                <strong>On the left, a door: "Stay in the city"</strong><br><br>
+                <em>Which do you choose?</em>`;
+            
+            dialogActions.innerHTML = `
+                <button class="dialog-btn choice" onclick="endGame('shutdown')">${currentLang === 'fa' ? '🔴 خاموش کردن' : '🔴 Shut Down'}</button>
+                <button class="dialog-btn choice" onclick="endGame('stay')">${currentLang === 'fa' ? '🚪 موندن' : '🚪 Stay'}</button>
+            `;
+            
+            dialogBox.classList.add('active');
+        }
+
+        function endGame(choice) {
+            closeDialog();
+            
+            const dialogBox = document.getElementById('dialogBox');
+            const dialogName = document.getElementById('dialogName');
+            const dialogText = document.getElementById('dialogText');
+            const dialogActions = document.getElementById('dialogActions');
+            
+            if (choice === 'shutdown') {
+                dialogName.innerHTML = `<span>💀</span><span>${currentLang === 'fa' ? 'پایان اول' : 'Ending 1'}</span>`;
+                dialogText.innerHTML = currentLang === 'fa'
+                    ? `دکمه قرمز رو زدی...<br><br>
+                    همه چیز سفید شد.<br>
+                    صداها قطع شدن. رنگ‌ها محو شدن.<br><br>
+                    <strong>تو از شبیه‌سازی بیرون زدی.</strong><br><br>
+                    ولی... کجایی؟<br>
+                    یه اتاق سفید بی‌انتها.<br>
+                    و یه صدای ناشناس:<br><br>
+                    <em>«به دنیای واقعی خوش اومدی، ${gameState.player.name}.»</em><br><br>
+                    <strong>🎬 پایان شماره ۱: رهایی</strong>`
+                    : `You pressed the red button...<br><br>
+                    Everything went white.<br>
+                    Sounds stopped. Colors faded.<br><br>
+                    <strong>You broke out of the simulation.</strong><br><br>
+                    But... where are you?<br>
+                    An endless white room.<br>
+                    And a strange voice:<br><br>
+                    <em>"Welcome to the real world, ${gameState.player.name}."</em><br><br>
+                    <strong>🎬 Ending 1: Freedom</strong>`;
+            } else {
+                dialogName.innerHTML = `<span>🏙️</span><span>${currentLang === 'fa' ? 'پایان دوم' : 'Ending 2'}</span>`;
+                dialogText.innerHTML = currentLang === 'fa'
+                    ? `از در گذشتی و برگشتی به شهر...<br><br>
+                    ولی این بار، همه چیز یادت هست.<br>
+                    هر شب که شهر ریست می‌شه، تو تنها کسی هستی که به یاد میاری.<br><br>
+                    یه روز یکی از تو می‌پرسه:<br>
+                    <em>«چرا این شهر هر شب تغییر می‌کنه؟»</em><br><br>
+                    و تو لبخند می‌زنی...<br><br>
+                    <strong>🎬 پایان شماره ۲: نگهبان شهر</strong>`
+                    : `You went through the door and returned to the city...<br><br>
+                    But this time, you remember everything.<br>
+                    Every night the city resets, you are the only one who remembers.<br><br>
+                    One day someone asks you:<br>
+                    <em>"Why does this city change every night?"</em><br><br>
+                    And you smile...<br><br>
+                    <strong>🎬 Ending 2: Guardian of the City</strong>`;
+            }
+            
+            dialogActions.innerHTML = `
+                <button class="dialog-btn" onclick="closeDialog(); showStats();">${currentLang === 'fa' ? '📊 آمار' : '📊 Stats'}</button>
+                <button class="dialog-btn" onclick="restartGame()">${currentLang === 'fa' ? '🔄 شروع مجدد' : '🔄 Restart'}</button>
+            `;
+            
+            dialogBox.classList.add('active');
+            
+            gameState.story.ending = choice;
+            saveGame();
+        }
+
+        function showStats() {
+            closeDialog();
+            
+            const time = gameState.time;
+            const stats = currentLang === 'fa'
+                ? `📊 آمار تو:\n\n⏱️ زمان بازی: روز ${time.day}\n🔍 سرنخ‌ها: ${gameState.story.cluesFound}/5\n💰 پول: $${gameState.player.money}\n🎬 پایان: ${gameState.story.ending === 'shutdown' ? 'رهایی' : 'نگهبان شهر'}`
+                : `📊 Your Stats:\n\n⏱️ Game time: Day ${time.day}\n🔍 Clues: ${gameState.story.cluesFound}/5\n💰 Money: $${gameState.player.money}\n🎬 Ending: ${gameState.story.ending === 'shutdown' ? 'Freedom' : 'Guardian'}`;
+            
+            showDialog(
+                currentLang === 'fa' ? 'آمار' : 'Stats',
+                stats
+            );
+        }
+
+        function restartGame() {
+            if (!confirm(currentLang === 'fa' ? 'مطمئنی؟ همه پیشرفتت پاک می‌شه.' : 'Sure? All progress will be lost.')) return;
+            
+            localStorage.removeItem('lastcity_save');
+            location.reload();
+        }
+
+        // ============================================
+        // DIALOG
+        // ============================================
         function showDialog(name, text) {
             const dialogBox = document.getElementById('dialogBox');
             document.getElementById('dialogName').innerHTML = `<span>👤</span><span>${name}</span>`;
             document.getElementById('dialogText').textContent = text;
+            document.getElementById('dialogActions').innerHTML = `<button class="dialog-btn" onclick="closeDialog()">${t('close')}</button>`;
             dialogBox.classList.add('active');
             
             if (document.exitPointerLock) document.exitPointerLock();
@@ -1461,37 +2465,19 @@
         }
 
         // ============================================
-        // INTERACTION PROMPT
+        // NOTIFICATION
         // ============================================
-        function checkInteractionPrompt() {
-            if (!playerMesh) return;
+        function showNotification(icon, title, text) {
+            const notif = document.getElementById('notification');
+            document.getElementById('notifIcon').textContent = icon;
+            document.getElementById('notifTitle').textContent = title;
+            document.getElementById('notifText').textContent = text;
             
-            let nearNPC = false;
-            let nearBuilding = false;
+            notif.classList.add('show');
             
-            npcs.forEach(npc => {
-                const dx = playerMesh.position.x - npc.position.x;
-                const dz = playerMesh.position.z - npc.position.z;
-                const dist = Math.sqrt(dx * dx + dz * dz);
-                
-                if (dist < 3.5) {
-                    nearNPC = true;
-                    const angle = Math.atan2(dx, dz);
-                    npc.mesh.rotation.y = angle;
-                }
-            });
-            
-            buildings.forEach(b => {
-                const dx = playerMesh.position.x - b.position.x;
-                const dz = playerMesh.position.z - b.position.z;
-                const dist = Math.sqrt(dx * dx + dz * dz);
-                
-                if (dist < 6) nearBuilding = true;
-            });
-            
-            const prompt = document.getElementById('interactPrompt');
-            if (nearNPC || nearBuilding) prompt.classList.add('show');
-            else prompt.classList.remove('show');
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 4000);
         }
 
         // ============================================
@@ -1505,20 +2491,42 @@
             updatePlayer(delta);
             updateTime(delta);
             updateCameraPosition();
-            checkInteractionPrompt();
-            
-            // NPC animation
-            npcs.forEach(npc => {
-                npc.phase += delta * 2;
-                npc.mesh.position.y = npc.baseY + Math.sin(npc.phase) * 0.05;
-            });
-            
-            // Street light glow
-            streetLights.forEach(({ lamp }) => {
-                if (lamp) lamp.material.emissiveIntensity = 0.8 + Math.sin(Date.now() * 0.003) * 0.2;
-            });
+            checkInteraction();
+            updateCars(delta);
+            animateNPCs(delta);
             
             if (renderer && scene && camera) renderer.render(scene, camera);
+        }
+
+        function updateCars(delta) {
+            cars.forEach(car => {
+                const data = car.userData;
+                
+                if (data.isHorizontal) {
+                    car.position.x += data.dirX * data.speed * delta;
+                    if (car.position.x > 750) car.position.x = -750;
+                    if (car.position.x < -750) car.position.x = 750;
+                } else {
+                    car.position.z += data.dirZ * data.speed * delta;
+                    if (car.position.z > 750) car.position.z = -750;
+                    if (car.position.z < -750) car.position.z = 750;
+                }
+            });
+        }
+
+        function animateNPCs(delta) {
+            npcs.forEach(npc => {
+                npc.phase += delta * 2;
+                npc.group.position.y = npc.baseY + Math.sin(npc.phase) * 0.03;
+                
+                // Rotate clue indicator
+                npc.group.children.forEach(child => {
+                    if (child.userData.isClue) {
+                        child.rotation.y += delta * 3;
+                        child.position.y = 2.6 + Math.sin(npc.phase * 2) * 0.1;
+                    }
+                });
+            });
         }
 
         // ============================================
@@ -1549,9 +2557,7 @@
             
             document.getElementById('nameTitle').textContent = t('nameTitle');
             document.getElementById('nameSub').textContent = t('nameSub');
-            document.getElementById('nameInput').placeholder = t('namePlaceholder');
             document.getElementById('nameBtnText').textContent = t('nameBtn');
-            
             document.getElementById('guideTitle').textContent = t('guideTitle');
             document.getElementById('guideSub').textContent = t('guideSub');
             document.getElementById('gControlTitle').textContent = t('gControlTitle');
@@ -1570,9 +2576,9 @@
             document.getElementById('gTip2').textContent = t('gTip2');
             document.getElementById('gTip3').textContent = t('gTip3');
             document.getElementById('guideBtnText').textContent = t('guideBtn');
-            
             document.getElementById('hudStatus').textContent = t('statusOnline');
             document.getElementById('interactText').textContent = t('interact');
+            document.getElementById('clueTitle').textContent = '🔍 ' + t('clue');
         }
 
         function submitName() {
@@ -1611,19 +2617,10 @@
 
         function openPause() {
             if (document.exitPointerLock) document.exitPointerLock();
-            const msg = currentLang === 'fa' 
-                ? 'بازی متوقف شد. برای ادامه کلیک کن.'
-                : 'Game paused. Click to continue.';
-            showDialog(currentLang === 'fa' ? 'منو' : 'Menu', msg);
-        }
-
-        function toggleGuide() {
-            showScreen('screen-guide');
-            document.getElementById('guideBtnText').textContent = currentLang === 'fa' ? '▶️ ادامه بازی' : '▶️ Continue';
-            document.getElementById('guideBtn').onclick = () => {
-                document.getElementById('screen-guide').classList.remove('active');
-                if (document.body.requestPointerLock) document.body.requestPointerLock();
-            };
+            showDialog(
+                currentLang === 'fa' ? 'منو' : 'Menu',
+                currentLang === 'fa' ? 'بازی متوقف شد. برای ادامه روی صفحه کلیک کن.' : 'Game paused. Click on screen to continue.'
+            );
         }
 
         function saveGame() {
@@ -1631,17 +2628,16 @@
                 name: gameState.player.name,
                 money: gameState.player.money,
                 position: gameState.player.position,
-                time: gameState.time
+                time: gameState.time,
+                clues: gameState.player.hasClue,
+                story: gameState.story
             };
             
             localStorage.setItem('lastcity_save', JSON.stringify(saveData));
-            
-            const msg = currentLang === 'fa' ? '✅ بازی ذخیره شد!' : '✅ Game saved!';
-            showDialog(currentLang === 'fa' ? 'سیستم' : 'System', msg);
         }
 
         // ============================================
-        // MOBILE CONTROLS
+        // MOBILE
         // ============================================
         function setupMobileControls() {
             const joystick = document.getElementById('joystick');
@@ -1707,6 +2703,21 @@
         }
 
         // ============================================
+        // SHAKE ANIMATION
+        // ============================================
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                20% { transform: translateX(-10px); }
+                40% { transform: translateX(10px); }
+                60% { transform: translateX(-10px); }
+                80% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // ============================================
         // INIT
         // ============================================
         window.addEventListener('load', () => {
@@ -1736,6 +2747,8 @@
             applyLanguage();
         });
     </script>
-
+</body>
+</html>
+    </script>
 </body>
 </html>
