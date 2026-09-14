@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>LAST CITY — آخرین شهر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        :root {
+            --neon-cyan: #00f0ff;
+            --neon-purple: #b537f2;
+            --neon-pink: #ff2e97;
+            --neon-yellow: #ffd60a;
+            --neon-green: #06ffa5;
+            --bg-dark: #05060f;
+            --text: #ffffff;
+            --text-dim: #8888aa;
+            --text-dark: #555577;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(10, 10, 30, 0.75);
+            --glass-strong: rgba(10, 10, 30, 0.95);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            font-family: 'Vazirmatn', sans-serif;
+            overflow: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .bg-fx {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            mix-blend-mode: screen;
+        }
+
+        .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, var(--neon-cyan), transparent 70%); top: -200px; right: -150px; animation: orb1 20s infinite ease-in-out; }
+        .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, var(--neon-purple), transparent 70%); bottom: -150px; left: -100px; animation: orb2 25s infinite ease-in-out; }
+        .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, var(--neon-pink), transparent 70%); top: 40%; left: 40%; animation: orb3 30s infinite ease-in-out; }
+
+        @keyframes orb1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-80px, 100px) scale(1.1); } }
+        @keyframes orb2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(100px, -80px) scale(1.15); } }
+        @keyframes orb3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-100px, 80px) scale(0.9); } }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+        }
+
+        .screen {
+            position: fixed;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .screen.active { display: flex; animation: screenIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes screenIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .lang-box { text-align: center; max-width: 500px; width: 100%; }
+        .lang-logo { font-size: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 40px var(--neon-cyan)); animation: logoFloat 3s infinite ease-in-out; }
+        @keyframes logoFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(5deg); } }
+
+        .lang-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        .lang-sub { font-size: 14px; color: var(--text-dim); letter-spacing: 3px; margin-bottom: 50px; font-family: 'Orbitron', sans-serif; }
+
+        .lang-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .lang-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .lang-card:hover { transform: translateY(-8px); border-color: var(--neon-cyan); box-shadow: 0 20px 60px rgba(0, 240, 255, 0.3); }
+        .lang-card:hover::before { opacity: 0.1; }
+        .lang-flag { font-size: 48px; display: block; margin-bottom: 12px; transition: transform 0.3s; }
+        .lang-card:hover .lang-flag { transform: scale(1.15); }
+        .lang-name { font-size: 20px; font-weight: 800; color: var(--text); }
+        .lang-native { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+        .name-box {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            background: var(--glass-strong);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 45px 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .name-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .name-icon { font-size: 60px; margin-bottom: 20px; filter: drop-shadow(0 0 30px var(--neon-cyan)); animation: logoFloat 3s infinite ease-in-out; }
+
+        .name-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .name-sub { font-size: 15px; color: var(--text-dim); margin-bottom: 30px; }
+
+        .name-input {
+            width: 100%;
+            padding: 18px 24px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 17px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .name-input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.15), 0 0 30px rgba(0, 240, 255, 0.3); }
+        .name-input::placeholder { color: var(--text-dark); font-weight: 500; }
+
+        .name-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .name-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0, 240, 255, 0.5); }
+        .name-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .guide-box {
+            max-width: 600px;
+            width: 100%;
+            background: var(--glass-strong);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px 35px;
+            position: relative;
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .guide-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .guide-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .guide-sub { text-align: center; font-size: 13px; color: var(--text-dim); margin-bottom: 30px; }
+        .guide-section { margin-bottom: 25px; }
+
+        .guide-section-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--neon-cyan);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guide-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .key {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            padding: 0 8px;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(181, 55, 242, 0.2));
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            flex-shrink: 0;
+        }
+
+        .guide-text { flex: 1; color: var(--text); font-weight: 500; }
+
+        .guide-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+            margin-top: 15px;
+        }
+
+        .guide-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0, 240, 255, 0.5); }
+
+        #gameCanvas { position: fixed; inset: 0; z-index: 5; display: none; }
+        #gameCanvas.active { display: block; }
+
+        .hud { position: fixed; inset: 0; z-index: 20; pointer-events: none; display: none; }
+        .hud.active { display: block; }
+
+        .hud-top {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .hud-player, .hud-time, .hud-money {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 10px 16px;
+            pointer-events: auto;
+        }
+
+        .hud-player { display: flex; align-items: center; gap: 10px; }
+
+        .hud-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .hud-player-info { display: flex; flex-direction: column; }
+        .hud-player-name { font-size: 14px; font-weight: 800; color: var(--text); }
+        .hud-player-status { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
+
+        .hud-time { text-align: center; min-width: 100px; }
+
+        .hud-clock {
+            font-family: 'Orbitron', monospace;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            line-height: 1;
+            text-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .hud-day { font-size: 10px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 3px; }
+
+        .hud-money { display: flex; align-items: center; gap: 8px; }
+        .hud-money-icon { font-size: 18px; }
+        .hud-money-value { font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 900; color: var(--neon-yellow); text-shadow: 0 0 15px var(--neon-yellow); }
+
+        .hud-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            pointer-events: auto;
+        }
+
+        .hud-btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            color: var(--text);
+            font-size: 20px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .hud-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3); }
+
+        .interact-prompt {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-strong);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 14px;
+            padding: 12px 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+            animation: promptPulse 2s infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .interact-prompt.show { opacity: 1; }
+
+        @keyframes promptPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
+            50% { box-shadow: 0 0 45px rgba(0, 240, 255, 0.7); }
+        }
+
+        .crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .crosshair.show { opacity: 1; }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: opacity 0.5s;
+        }
+
+        .loading-overlay.hidden { opacity: 0; pointer-events: none; }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 240, 255, 0.2);
+            border-top-color: var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text { font-family: 'Orbitron', monospace; font-size: 12px; letter-spacing: 4px; color: var(--neon-cyan); }
+
+        .dialog-box {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 600px;
+            width: calc(100% - 40px);
+            background: var(--glass-strong);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 20px 24px;
+            z-index: 30;
+            display: none;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.3);
+        }
+
+        .dialog-box.active { display: block; animation: dialogIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes dialogIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+        .dialog-name { font-size: 13px; font-weight: 900; color: var(--neon-cyan); letter-spacing: 1.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .dialog-text { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 15px; }
+        .dialog-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .dialog-btn {
+            padding: 10px 20px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 10px;
+            color: var(--neon-cyan);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dialog-btn:hover { background: rgba(0, 240, 255, 0.2); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); }
+
+        .mobile-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            z-index: 25;
+            display: none;
+            pointer-events: none;
+        }
+
+        .mobile-controls.active { display: block; }
+
+        .joystick {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            width: 130px;
+            height: 130px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            border-radius: 50%;
+            pointer-events: auto;
+            touch-action: none;
+        }
+
+        .joystick-knob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+        }
+
+        .mobile-btn {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 240, 255, 0.15);
+            border: 2px solid rgba(0, 240, 255, 0.4);
+            border-radius: 50%;
+            color: var(--neon-cyan);
+            font-size: 24px;
+            pointer-events: auto;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+        }
+
+        .mobile-btn.interact { bottom: 150px; right: 40px; }
+        .mobile-btn.jump { bottom: 60px; right: 40px; }
+        .mobile-btn:active { background: rgba(0, 240, 255, 0.3); transform: scale(0.95); }
+
+        @media (max-width: 768px) {
+            .mobile-controls.active { display: block; }
+            .hud-top { top: 12px; left: 12px; right: 12px; }
+            .hud-player, .hud-time, .hud-money { padding: 8px 12px; }
+            .hud-clock { font-size: 18px; }
+            .hud-player-name { font-size: 12px; }
+            .hud-avatar { width: 30px; height: 30px; font-size: 14px; }
+        }
+
+        @media (min-width: 769px) { .mobile-controls { display: none !important; } }
+
+        @media (max-width: 600px) {
+            .lang-title { font-size: 32px; letter-spacing: 4px; }
+            .lang-logo { font-size: 60px; }
+            .lang-cards { grid-template-columns: 1fr; }
+            .name-title { font-size: 22px; }
+            .guide-title { font-size: 20px; }
+            .guide-box { padding: 30px 22px; }
+            .name-box { padding: 35px 22px; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-fx">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+    </div>
+    <div class="bg-grid"></div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">LOADING...</div>
+    </div>
+
+    <!-- LANGUAGE SCREEN -->
+    <div class="screen active" id="screen-lang">
+        <div class="lang-box">
+            <div class="lang-logo">🌃</div>
+            <h1 class="lang-title">LAST CITY</h1>
+            <p class="lang-sub">THE FINAL CHAPTER</p>
+            <div class="lang-cards">
+                <div class="lang-card" onclick="selectLanguage('fa')">
+                    <span class="lang-flag">🇮🇷</span>
+                    <div class="lang-name">فارسی</div>
+                    <div class="lang-native">Persian</div>
+                </div>
+                <div class="lang-card" onclick="selectLanguage('en')">
+                    <span class="lang-flag">🇬🇧</span>
+                    <div class="lang-name">English</div>
+                    <div class="lang-native">انگلیسی</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAME SCREEN -->
+    <div class="screen" id="screen-name">
+        <div class="name-box">
+            <div class="name-icon">👤</div>
+            <h2 class="name-title" id="nameTitle">نام تو چیست؟</h2>
+            <p class="name-sub" id="nameSub">این اسم توی شهر شناخته می‌شه</p>
+            <input type="text" class="name-input" id="nameInput" placeholder="نام..." maxlength="15" autocomplete="off">
+            <button class="name-btn" id="nameBtn" onclick="submitName()" disabled>
+                <span id="nameBtnText">ادامه</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- GUIDE SCREEN -->
+    <div class="screen" id="screen-guide">
+        <div class="guide-box">
+            <h2 class="guide-title" id="guideTitle">راهنما</h2>
+            <p class="guide-sub" id="guideSub">قبل از ورود به شهر، اینا رو بدان</p>
+
+            <div class="guide-section">
+                <div class="guide-section-title"><span>🎮</span><span id="gControlTitle">کنترل‌ها</span></div>
+                <div class="guide-item">
+                    <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span>
+                    <span class="guide-text" id="gMove">حرکت در شهر</span>
+                </div>
+                <div class="guide-item"><span class="key">🖱️</span><span class="guide-text" id="gLook">چرخش دوربین</span></div>
+                <div class="guide-item"><span class="key">E</span><span class="guide-text" id="gInteract">تعامل با NPC / ورود به ساختمان</span></div>
+                <div class="guide-item"><span class="key">Shift</span><span class="guide-text" id="gRun">دویدن</span></div>
+                <div class="guide-item"><span class="key">Esc</span><span class="guide-text" id="gPause">منو / توقف</span></div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title"><span>🎯</span><span id="gGoalTitle">هدف بازی</span></div>
+                <div class="guide-item"><span>🌆</span><span class="guide-text" id="gGoal1">در شهر حرکت کن و با NPCها صحبت کن</span></div>
+                <div class="guide-item"><span>🔍</span><span class="guide-text" id="gGoal2">سرنخ‌ها رو پیدا کن تا راز شهر رو بفهمی</span></div>
+                <div class="guide-item"><span>💰</span><span class="guide-text" id="gGoal3">کار کن، پول دربیار، و زندگی‌ات رو بساز</span></div>
+                <div class="guide-item"><span>🌙</span><span class="guide-text" id="gGoal4">ساعت ۰۰:۰۰ — شهر تغییر می‌کنه!</span></div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-section-title"><span>💡</span><span id="gTipsTitle">نکات</span></div>
+                <div class="guide-item"><span>💾</span><span class="guide-text" id="gTip1">بازی خودکار ذخیره می‌شه</span></div>
+                <div class="guide-item"><span>🕐</span><span class="guide-text" id="gTip2">۱ روز = ۳۰ ثانیه واقعی</span></div>
+                <div class="guide-item"><span>📱</span><span class="guide-text" id="gTip3">روی موبایل هم کار می‌کنه (جوی‌استیک)</span></div>
+            </div>
+
+            <button class="guide-btn" id="guideBtn" onclick="startGame()">
+                <span id="guideBtnText">🌆 ورود به شهر</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="gameCanvas"></div>
+
+    <div class="hud" id="hud">
+        <div class="hud-top">
+            <div class="hud-player">
+                <div class="hud-avatar" id="hudAvatar">A</div>
+                <div class="hud-player-info">
+                    <div class="hud-player-name" id="hudName">Player</div>
+                    <div class="hud-player-status" id="hudStatus">ONLINE</div>
+                </div>
+            </div>
+            <div class="hud-time">
+                <div class="hud-clock" id="hudClock">08:00</div>
+                <div class="hud-day" id="hudDay">DAY 1</div>
+            </div>
+            <div class="hud-money">
+                <div class="hud-money-icon">💰</div>
+                <div class="hud-money-value" id="hudMoney">$2,450</div>
+            </div>
+        </div>
+        <div class="crosshair" id="crosshair"></div>
+        <div class="interact-prompt" id="interactPrompt">
+            <span class="key">E</span>
+            <span id="interactText">تعامل</span>
+        </div>
+        <div class="hud-bottom">
+            <button class="hud-btn" onclick="toggleGuide()" title="راهنما">❓</button>
+            <button class="hud-btn" onclick="saveGame()" title="ذخیره">💾</button>
+            <button class="hud-btn" onclick="openPause()" title="منو">⏸️</button>
+        </div>
+    </div>
+
+    <div class="mobile-controls" id="mobileControls">
+        <div class="joystick" id="joystick">
+            <div class="joystick-knob" id="joystickKnob"></div>
+        </div>
+        <div class="mobile-btn interact" id="mobileInteract">🤝</div>
+        <div class="mobile-btn jump" id="mobileJump">⬆️</div>
+    </div>
+
+    <div class="dialog-box" id="dialogBox">
+        <div class="dialog-name" id="dialogName"><span>👤</span><span>NPC</span></div>
+        <div class="dialog-text" id="dialogText">سلام!</div>
+        <div class="dialog-actions" id="dialogActions">
+            <button class="dialog-btn" onclick="closeDialog()">خداحافظ</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script>
+        // ============================================
+        // TRANSLATIONS
+        // ============================================
+        const T = {
+            fa: {
+                nameTitle: 'نام تو چیست؟',
+                nameSub: 'این اسم توی شهر شناخته می‌شه',
+                namePlaceholder: 'نام...',
+                nameBtn: 'ادامه',
+                guideTitle: 'راهنما',
+                guideSub: 'قبل از ورود به شهر، اینا رو بدان',
+                gControlTitle: 'کنترل‌ها',
+                gMove: 'حرکت در شهر',
+                gLook: 'چرخش دوربین',
+                gInteract: 'تعامل با NPC / ورود به ساختمان',
+                gRun: 'دویدن',
+                gPause: 'منو / توقف',
+                gGoalTitle: 'هدف بازی',
+                gGoal1: 'در شهر حرکت کن و با NPCها صحبت کن',
+                gGoal2: 'سرنخ‌ها رو پیدا کن تا راز شهر رو بفهمی',
+                gGoal3: 'کار کن، پول دربیار، و زندگی‌ات رو بساز',
+                gGoal4: 'ساعت ۰۰:۰۰ — شهر تغییر می‌کنه!',
+                gTipsTitle: 'نکات',
+                gTip1: 'بازی خودکار ذخیره می‌شه',
+                gTip2: '۱ روز = ۳۰ ثانیه واقعی',
+                gTip3: 'روی موبایل هم کار می‌کنه (جوی‌استیک)',
+                guideBtn: '🌆 ورود به شهر',
+                statusOnline: 'آنلاین',
+                interact: 'تعامل',
+                dayNames: ['روز ۱', 'روز ۲', 'روز ۳', 'روز ۴', 'روز ۵', 'روز ۶', 'روز ۷']
+            },
+            en: {
+                nameTitle: 'What is your name?',
+                nameSub: 'This name will be known in the city',
+                namePlaceholder: 'Name...',
+                nameBtn: 'Continue',
+                guideTitle: 'Guide',
+                guideSub: 'Before entering the city, know these',
+                gControlTitle: 'Controls',
+                gMove: 'Move in the city',
+                gLook: 'Look around',
+                gInteract: 'Interact with NPC / Enter building',
+                gRun: 'Run',
+                gPause: 'Pause / Menu',
+                gGoalTitle: 'Game Goal',
+                gGoal1: 'Move in the city and talk to NPCs',
+                gGoal2: 'Find clues to understand the city mystery',
+                gGoal3: 'Work, earn money, and build your life',
+                gGoal4: '00:00 — The city changes!',
+                gTipsTitle: 'Tips',
+                gTip1: 'Game auto-saves',
+                gTip2: '1 day = 30 real seconds',
+                gTip3: 'Works on mobile too (joystick)',
+                guideBtn: '🌆 Enter the City',
+                statusOnline: 'ONLINE',
+                interact: 'Interact',
+                dayNames: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7']
+            }
+        };
+
+        let currentLang = 'fa';
+        let playerName = 'Player';
+
+        function t(key) { return T[currentLang][key]; }
+
+        // ============================================
+        // GAME STATE
+        // ============================================
+        const gameState = {
+            player: {
+                name: 'Player',
+                money: 2450,
+                position: { x: 0, y: 1.7, z: 0 },
+                rotation: { x: 0, y: 0 },
+                isRunning: false,
+                speed: 6,
+                runSpeed: 10
+            },
+            time: {
+                hours: 8,
+                minutes: 0,
+                day: 1,
+                dayLength: 30,
+                elapsed: 0
+            },
+            controls: {
+                keys: {},
+                isLocked: false
+            }
+        };
+
+        // ============================================
+        // THREE.JS SETUP
+        // ============================================
+        let scene, camera, renderer;
+        let playerMesh, groundMesh;
+        let clock = new THREE.Clock();
+        let ambientLight, sunLight, hemisphereLight;
+        let streetLights = [];
+
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a1e);
+            scene.fog = new THREE.Fog(0x0a0a1e, 30, 150);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.getElementById('gameCanvas').appendChild(renderer.domElement);
+
+            setupLights();
+            createGround();
+            createPlayer();
+            createEnvironment();
+
+            animate();
+        }
+
+        function setupLights() {
+            ambientLight = new THREE.AmbientLight(0x404060, 0.5);
+            scene.add(ambientLight);
+
+            hemisphereLight = new THREE.HemisphereLight(0x88aaff, 0x080820, 0.6);
+            scene.add(hemisphereLight);
+
+            sunLight = new THREE.DirectionalLight(0xffffff, 1);
+            sunLight.position.set(30, 50, 30);
+            sunLight.castShadow = true;
+            sunLight.shadow.mapSize.width = 2048;
+            sunLight.shadow.mapSize.height = 2048;
+            sunLight.shadow.camera.near = 0.5;
+            sunLight.shadow.camera.far = 200;
+            sunLight.shadow.camera.left = -80;
+            sunLight.shadow.camera.right = 80;
+            sunLight.shadow.camera.top = 80;
+            sunLight.shadow.camera.bottom = -80;
+            scene.add(sunLight);
+        }
+
+        function createGround() {
+            const groundGeo = new THREE.PlaneGeometry(400, 400);
+            const groundMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, roughness: 0.9, metalness: 0.1 });
+            groundMesh = new THREE.Mesh(groundGeo, groundMat);
+            groundMesh.rotation.x = -Math.PI / 2;
+            groundMesh.receiveShadow = true;
+            scene.add(groundMesh);
+
+            const gridHelper = new THREE.GridHelper(400, 100, 0x00f0ff, 0x00f0ff);
+            gridHelper.material.opacity = 0.15;
+            gridHelper.material.transparent = true;
+            gridHelper.position.y = 0.01;
+            scene.add(gridHelper);
+
+            createRoadLines();
+        }
+
+        function createRoadLines() {
+            const roadMat = new THREE.MeshStandardMaterial({
+                color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.8,
+                transparent: true, opacity: 0.5
+            });
+
+            for (let i = -4; i <= 4; i++) {
+                if (i === 0) continue;
+                const hLine = new THREE.Mesh(new THREE.BoxGeometry(380, 0.05, 0.3), roadMat);
+                hLine.position.set(0, 0.02, i * 20);
+                scene.add(hLine);
+                const vLine = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.05, 380), roadMat);
+                vLine.position.set(i * 20, 0.02, 0);
+                scene.add(vLine);
+            }
+        }
+
+        function createPlayer() {
+            const bodyGeo = new THREE.BoxGeometry(1, 1.8, 0.6);
+            const bodyMat = new THREE.MeshStandardMaterial({
+                color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.6,
+                metalness: 0.7, roughness: 0.3
+            });
+            playerMesh = new THREE.Mesh(bodyGeo, bodyMat);
+            playerMesh.position.set(0, 0.9, 0);
+            playerMesh.castShadow = true;
+
+            const headGeo = new THREE.SphereGeometry(0.35, 16, 16);
+            const headMat = new THREE.MeshStandardMaterial({
+                color: 0xb537f2, emissive: 0xb537f2, emissiveIntensity: 0.5,
+                metalness: 0.6, roughness: 0.3
+            });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.set(0, 1.4, 0);
+            head.castShadow = true;
+            playerMesh.add(head);
+
+            const eyeGeo = new THREE.SphereGeometry(0.06, 8, 8);
+            const eyeMat = new THREE.MeshStandardMaterial({ color: 0xff2e97, emissive: 0xff2e97, emissiveIntensity: 1 });
+            
+            const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+            leftEye.position.set(-0.12, 1.45, 0.3);
+            playerMesh.add(leftEye);
+            
+            const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+            rightEye.position.set(0.12, 1.45, 0.3);
+            playerMesh.add(rightEye);
+
+            const playerLight = new THREE.PointLight(0x00f0ff, 1.5, 15, 2);
+            playerLight.position.set(0, 2, 0);
+            playerMesh.add(playerLight);
+
+            scene.add(playerMesh);
+            updateCameraPosition();
+        }
+
+        function updateCameraPosition() {
+            if (!playerMesh) return;
+            const rot = gameState.player.rotation.y;
+            const offsetX = 0, offsetY = 3.5, offsetZ = -6;
+            const dx = offsetX * Math.cos(rot) + offsetZ * Math.sin(rot);
+            const dz = -offsetX * Math.sin(rot) + offsetZ * Math.cos(rot);
+            
+            camera.position.x = playerMesh.position.x + dx;
+            camera.position.y = playerMesh.position.y + offsetY;
+            camera.position.z = playerMesh.position.z + dz;
+            
+            camera.lookAt(playerMesh.position.x, playerMesh.position.y + 1.5, playerMesh.position.z);
+        }
+
+        function createEnvironment() {
+            createStreetLights();
+            createBuildings();
+            createNPCs();
+        }
+
+        function createStreetLights() {
+            const positions = [
+                [-40, -40], [-40, 40], [40, -40], [40, 40],
+                [-40, 0], [40, 0], [0, -40], [0, 40],
+                [-20, -20], [-20, 20], [20, -20], [20, 20]
+            ];
+
+            positions.forEach(([x, z]) => {
+                const poleGeo = new THREE.CylinderGeometry(0.1, 0.1, 6, 8);
+                const poleMat = new THREE.MeshStandardMaterial({ color: 0x222233, metalness: 0.8, roughness: 0.3 });
+                const pole = new THREE.Mesh(poleGeo, poleMat);
+                pole.position.set(x, 3, z);
+                pole.castShadow = true;
+                scene.add(pole);
+
+                const lampGeo = new THREE.SphereGeometry(0.3, 16, 16);
+                const lampMat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 1 });
+                const lamp = new THREE.Mesh(lampGeo, lampMat);
+                lamp.position.set(x, 6, z);
+                scene.add(lamp);
+
+                const light = new THREE.PointLight(0x00f0ff, 0.8, 15, 2);
+                light.position.set(x, 6, z);
+                scene.add(light);
+                
+                streetLights.push({ light, lamp });
+            });
+        }
+
+        // ============================================
+        // BUILDINGS
+        // ============================================
+        const buildings = [];
+
+        function createBuildings() {
+            const buildingData = [
+                { name: { fa: 'فروشگاه', en: 'Store' }, color: 0x00f0ff, pos: [-25, 0, -25], size: [8, 6, 8] },
+                { name: { fa: 'شرکت', en: 'Company' }, color: 0xb537f2, pos: [25, 0, -25], size: [12, 15, 12] },
+                { name: { fa: 'خانه', en: 'House' }, color: 0xff2e97, pos: [-25, 0, 25], size: [6, 5, 6] },
+                { name: { fa: 'بیمارستان', en: 'Hospital' }, color: 0x06ffa5, pos: [25, 0, 25], size: [10, 8, 10] },
+                { name: { fa: 'پلیس', en: 'Police' }, color: 0x00f0ff, pos: [-50, 0, 0], size: [9, 7, 9] },
+                { name: { fa: 'پارک', en: 'Park' }, color: 0x06ffa5, pos: [50, 0, 0], size: [15, 1, 15], isPark: true },
+                { name: { fa: 'مترو', en: 'Metro' }, color: 0xffd60a, pos: [0, 0, -50], size: [7, 3, 7] }
+            ];
+
+            buildingData.forEach((data) => createBuilding(data));
+        }
+
+        function createBuilding(data) {
+            const [w, h, d] = data.size;
+            const [x, y, z] = data.pos;
+            
+            if (data.isPark) {
+                const parkGeo = new THREE.BoxGeometry(w, 0.3, d);
+                const parkMat = new THREE.MeshStandardMaterial({ color: 0x1a4a1a, roughness: 0.9 });
+                const park = new THREE.Mesh(parkGeo, parkMat);
+                park.position.set(x, 0.15, z);
+                park.receiveShadow = true;
+                scene.add(park);
+
+                for (let i = 0; i < 5; i++) {
+                    const treeX = x + (Math.random() - 0.5) * w * 0.7;
+                    const treeZ = z + (Math.random() - 0.5) * d * 0.7;
+                    
+                    const trunkGeo = new THREE.CylinderGeometry(0.2, 0.3, 2, 8);
+                    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4a2a1a });
+                    const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+                    trunk.position.set(treeX, 1.3, treeZ);
+                    trunk.castShadow = true;
+                    scene.add(trunk);
+                    
+                    const leafGeo = new THREE.SphereGeometry(1.2, 8, 8);
+                    const leafMat = new THREE.MeshStandardMaterial({ color: 0x06ffa5, emissive: 0x06ffa5, emissiveIntensity: 0.3 });
+                    const leaf = new THREE.Mesh(leafGeo, leafMat);
+                    leaf.position.set(treeX, 3, treeZ);
+                    leaf.castShadow = true;
+                    scene.add(leaf);
+                }
+
+                buildings.push({ name: data.name, mesh: park, position: { x, z } });
+                return;
+            }
+
+            const buildingGeo = new THREE.BoxGeometry(w, h, d);
+            const buildingMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, roughness: 0.7, metalness: 0.3 });
+            const building = new THREE.Mesh(buildingGeo, buildingMat);
+            building.position.set(x, h / 2, z);
+            building.castShadow = true;
+            building.receiveShadow = true;
+            scene.add(building);
+
+            // پنجره‌ها
+            const windowMat = new THREE.MeshStandardMaterial({
+                color: data.color, emissive: data.color, emissiveIntensity: 0.8
+            });
+
+            const floors = Math.floor(h / 2);
+            for (let floor = 0; floor < floors; floor++) {
+                for (let win = 0; win < 3; win++) {
+                    if (Math.random() > 0.6) continue;
+                    
+                    const winGeo = new THREE.PlaneGeometry(0.8, 1);
+                    const winMesh = new THREE.Mesh(winGeo, windowMat);
+                    
+                    const side = Math.floor(Math.random() * 4);
+                    const offset = (win - 1) * (w / 3.5);
+                    const yPos = -h / 2 + 1.5 + floor * 2;
+                    
+                    if (side === 0) { winMesh.position.set(offset, yPos, d / 2 + 0.01); }
+                    else if (side === 1) { winMesh.position.set(offset, yPos, -d / 2 - 0.01); winMesh.rotation.y = Math.PI; }
+                    else if (side === 2) { winMesh.position.set(w / 2 + 0.01, yPos, offset); winMesh.rotation.y = Math.PI / 2; }
+                    else { winMesh.position.set(-w / 2 - 0.01, yPos, offset); winMesh.rotation.y = -Math.PI / 2; }
+                    
+                    building.add(winMesh);
+                }
+            }
+
+            const signGeo = new THREE.BoxGeometry(w * 0.7, 0.8, 0.1);
+            const signMat = new THREE.MeshStandardMaterial({ color: data.color, emissive: data.color, emissiveIntensity: 1 });
+            const sign = new THREE.Mesh(signGeo, signMat);
+            sign.position.set(0, h / 2 + 0.5, d / 2 + 0.05);
+            building.add(sign);
+
+            const light = new THREE.PointLight(data.color, 0.8, 15, 2);
+            light.position.set(0, h / 2 + 1, 0);
+            building.add(light);
+
+            buildings.push({ name: data.name, mesh: building, position: { x, z } });
+        }
+
+        // ============================================
+        // NPCs
+        // ============================================
+        const npcs = [];
+
+        function createNPCs() {
+            const npcData = [
+                { name: { fa: 'آقای رضایی', en: 'Mr. Rezaei' }, color: 0x00f0ff, pos: [-20, 0, -20], dialog: {
+                    fa: 'سلام! من صاحب فروشگاهم. هر شب یه چیزی توی این شهر عوض می‌شه... نمی‌دونم چرا.',
+                    en: 'Hi! I own the store. Something changes in this city every night... I don\'t know why.'
+                }},
+                { name: { fa: 'خانم احمدی', en: 'Mrs. Ahmadi' }, color: 0xb537f2, pos: [20, 0, -20], dialog: {
+                    fa: 'من اینجا کار می‌کنم. دیشب یه نفر اینجا بود... ولی امروز هیچ‌کس یادش نمیاد.',
+                    en: 'I work here. Last night someone was here... but today nobody remembers.'
+                }},
+                { name: { fa: 'پسر کوچیک', en: 'Little Boy' }, color: 0xff2e97, pos: [-20, 0, 20], dialog: {
+                    fa: 'من یه ساختمون دیدم که قبلاً نبود! بعدش شب ناپدید شد!',
+                    en: 'I saw a building that wasn\'t there before! Then it disappeared at night!'
+                }},
+                { name: { fa: 'دکتر', en: 'Doctor' }, color: 0x06ffa5, pos: [20, 0, 20], dialog: {
+                    fa: 'مردم میان اینجا با سردرد. میگن شب‌ها صداهایی می‌شنون...',
+                    en: 'People come here with headaches. They say they hear voices at night...'
+                }},
+                { name: { fa: 'پلیس', en: 'Police' }, color: 0x00f0ff, pos: [-45, 0, 5], dialog: {
+                    fa: 'من ۱۰ ساله اینجام. هیچ‌وقت نتونستم بفهمم این شهر چرا تغییر می‌کنه.',
+                    en: 'I\'ve been here 10 years. Never could understand why this city changes.'
+                }},
+                { name: { fa: 'پیرمرد', en: 'Old Man' }, color: 0xffd60a, pos: [45, 0, 5], dialog: {
+                    fa: 'جوون! این شهر یه رازی داره. اگه دنبال جوابی، برو سمت مترو.',
+                    en: 'Young one! This city has a secret. If you seek answers, go to the metro.'
+                }},
+                { name: { fa: 'دختر جوون', en: 'Young Girl' }, color: 0xb537f2, pos: [5, 0, -45], dialog: {
+                    fa: 'من هر شب ساعت ۱۲:۰۰ بیدار می‌شم. یه نور عجیب می‌بینم.',
+                    en: 'I wake up every night at 12:00. I see a strange light.'
+                }},
+                { name: { fa: 'نگهبان', en: 'Guard' }, color: 0xff2e97, pos: [30, 0, 0], dialog: {
+                    fa: 'اینجا همه چیز عادیه... یا شایدم نه. من فقط کارمو می‌کنم.',
+                    en: 'Everything is normal here... or maybe not. I just do my job.'
+                }}
+            ];
+
+            npcData.forEach(data => createNPC(data));
+        }
+
+        function createNPC(data) {
+            const [x, y, z] = data.pos;
+            
+            const bodyGeo = new THREE.BoxGeometry(0.6, 1.5, 0.4);
+            const bodyMat = new THREE.MeshStandardMaterial({
+                color: data.color, emissive: data.color, emissiveIntensity: 0.4,
+                metalness: 0.5, roughness: 0.4
+            });
+            const body = new THREE.Mesh(bodyGeo, bodyMat);
+            body.position.set(x, 0.75, z);
+            body.castShadow = true;
+            scene.add(body);
+
+            const headGeo = new THREE.SphereGeometry(0.25, 12, 12);
+            const headMat = new THREE.MeshStandardMaterial({ color: 0xffe0c0, roughness: 0.6 });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.set(x, 1.75, z);
+            head.castShadow = true;
+            scene.add(head);
+
+            const eyeGeo = new THREE.SphereGeometry(0.04, 6, 6);
+            const eyeMat = new THREE.MeshStandardMaterial({ color: 0x000000 });
+            
+            const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+            leftEye.position.set(x - 0.08, 1.8, z + 0.2);
+            scene.add(leftEye);
+            
+            const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+            rightEye.position.set(x + 0.08, 1.8, z + 0.2);
+            scene.add(rightEye);
+
+            const npcLight = new THREE.PointLight(data.color, 0.6, 8, 2);
+            npcLight.position.set(x, 2.2, z);
+            scene.add(npcLight);
+
+            npcs.push({
+                name: data.name,
+                dialog: data.dialog,
+                mesh: body,
+                position: { x, z },
+                baseY: 0.75,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+        // ============================================
+        // INPUT HANDLING
+        // ============================================
+        function setupInput() {
+            document.addEventListener('keydown', (e) => {
+                gameState.controls.keys[e.code] = true;
+                
+                if (e.code === 'Escape') openPause();
+                if (e.code === 'KeyE') handleInteract();
+                
+                if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                gameState.controls.keys[e.code] = false;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!gameState.controls.isLocked) return;
+                const sensitivity = 0.002;
+                gameState.player.rotation.y -= e.movementX * sensitivity;
+            });
+
+            document.addEventListener('click', () => {
+                if (document.getElementById('hud').classList.contains('active') && !document.getElementById('dialogBox').classList.contains('active')) {
+                    if (document.body.requestPointerLock) document.body.requestPointerLock();
+                }
+            });
+
+            document.addEventListener('pointerlockchange', () => {
+                gameState.controls.isLocked = document.pointerLockElement === document.body;
+                const crosshair = document.getElementById('crosshair');
+                if (gameState.controls.isLocked) crosshair.classList.add('show');
+                else crosshair.classList.remove('show');
+            });
+
+            window.addEventListener('resize', () => {
+                if (!camera || !renderer) return;
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // ============================================
+        // PLAYER MOVEMENT
+        // ============================================
+        function updatePlayer(delta) {
+            if (!playerMesh) return;
+            
+            const keys = gameState.controls.keys;
+            const player = gameState.player;
+            
+            let moveX = 0, moveZ = 0;
+            
+            if (keys['KeyW'] || keys['ArrowUp']) moveZ -= 1;
+            if (keys['KeyS'] || keys['ArrowDown']) moveZ += 1;
+            if (keys['KeyA'] || keys['ArrowLeft']) moveX -= 1;
+            if (keys['KeyD'] || keys['ArrowRight']) moveX += 1;
+            
+            player.isRunning = keys['ShiftLeft'] || keys['ShiftRight'];
+            const speed = player.isRunning ? player.runSpeed : player.speed;
+            
+            const rot = player.rotation.y;
+            const cos = Math.cos(rot);
+            const sin = Math.sin(rot);
+            
+            const worldX = moveX * cos + moveZ * sin;
+            const worldZ = -moveX * sin + moveZ * cos;
+            
+            const len = Math.sqrt(worldX * worldX + worldZ * worldZ);
+            if (len > 0) {
+                const nx = worldX / len;
+                const nz = worldZ / len;
+                
+                playerMesh.position.x += nx * speed * delta;
+                playerMesh.position.z += nz * speed * delta;
+                
+                // Rotate mesh towards movement
+                const targetRot = Math.atan2(nx, nz);
+                playerMesh.rotation.y = targetRot;
+            }
+            
+            // Bounds
+            playerMesh.position.x = Math.max(-180, Math.min(180, playerMesh.position.x));
+            playerMesh.position.z = Math.max(-180, Math.min(180, playerMesh.position.z));
+            
+            player.position.x = playerMesh.position.x;
+            player.position.z = playerMesh.position.z;
+        }
+
+        // ============================================
+        // TIME / DAY-NIGHT CYCLE
+        // ============================================
+        function updateTime(delta) {
+            const time = gameState.time;
+            time.elapsed += delta;
+            
+            const totalMinutesPerDay = 24 * 60;
+            const minutesPerSecond = totalMinutesPerDay / time.dayLength;
+            
+            time.minutes += minutesPerSecond * delta;
+            
+            if (time.minutes >= 60) {
+                time.hours += Math.floor(time.minutes / 60);
+                time.minutes = time.minutes % 60;
+            }
+            
+            if (time.hours >= 24) {
+                time.hours = 0;
+                time.day++;
+                onNewDay();
+            }
+            
+            updateDayNightCycle();
+            updateClockHUD();
+        }
+
+        function updateDayNightCycle() {
+            const hours = gameState.time.hours;
+            const minutes = gameState.time.minutes;
+            const totalHours = hours + minutes / 60;
+            
+            let sunAngle = ((totalHours - 6) / 12) * Math.PI;
+            
+            const sunX = Math.cos(sunAngle) * 80;
+            const sunY = Math.sin(sunAngle) * 80 + 20;
+            const sunZ = 30;
+            
+            if (sunLight) {
+                sunLight.position.set(sunX, sunY, sunZ);
+                
+                let intensity = 0;
+                if (totalHours >= 6 && totalHours <= 18) {
+                    intensity = Math.sin((totalHours - 6) / 12 * Math.PI) * 1.2 + 0.3;
+                } else {
+                    intensity = 0.05;
+                }
+                sunLight.intensity = intensity;
+            }
+            
+            const isNight = totalHours < 6 || totalHours >= 18;
+            const isSunset = (totalHours >= 17 && totalHours < 20) || (totalHours >= 4 && totalHours < 7);
+            
+            let skyColor, fogColor;
+            
+            if (isNight) {
+                skyColor = new THREE.Color(0x05060f);
+                fogColor = new THREE.Color(0x05060f);
+            } else if (isSunset) {
+                skyColor = new THREE.Color(0x2a1030);
+                fogColor = new THREE.Color(0x2a1030);
+            } else {
+                skyColor = new THREE.Color(0x0a0a1e);
+                fogColor = new THREE.Color(0x0a0a1e);
+            }
+            
+            if (scene.background) scene.background.lerp(skyColor, 0.05);
+            if (scene.fog) scene.fog.color.lerp(fogColor, 0.05);
+            
+            if (ambientLight) ambientLight.intensity = isNight ? 0.15 : 0.5;
+            
+            streetLights.forEach(({ light, lamp }) => {
+                if (isNight) {
+                    light.intensity = 1.2;
+                    lamp.material.emissiveIntensity = 1;
+                } else {
+                    light.intensity = 0.2;
+                    lamp.material.emissiveIntensity = 0.3;
+                }
+            });
+            
+            gameState.world = { isNight };
+        }
+
+        function updateClockHUD() {
+            const hours = String(Math.floor(gameState.time.hours)).padStart(2, '0');
+            const minutes = String(Math.floor(gameState.time.minutes)).padStart(2, '0');
+            
+            const clock = document.getElementById('hudClock');
+            const day = document.getElementById('hudDay');
+            
+            if (clock) clock.textContent = `${hours}:${minutes}`;
+            if (day) day.textContent = t('dayNames')[Math.min(gameState.time.day - 1, 6)];
+        }
+
+        function onNewDay() {
+            console.log('🌅 New day:', gameState.time.day);
+        }
+
+        // ============================================
+        // INTERACTION
+        // ============================================
+        function handleInteract() {
+            if (!playerMesh) return;
+            
+            let nearestNPC = null;
+            let nearestDist = 3.5;
+            
+            npcs.forEach(npc => {
+                const dx = playerMesh.position.x - npc.mesh.position.x;
+                const dz = playerMesh.position.z - npc.mesh.position.z;
+                const dist = Math.sqrt(dx * dx + dz * dz);
+                
+                if (dist < nearestDist) {
+                    nearestDist = dist;
+                    nearestNPC = npc;
+                }
+            });
+            
+            if (nearestNPC) {
+                const dialog = nearestNPC.dialog[currentLang];
+                showDialog(nearestNPC.name[currentLang], dialog);
+            } else {
+                let nearestBuilding = null;
+                let nearestDist2 = 5;
+                
+                buildings.forEach(b => {
+                    const dx = playerMesh.position.x - b.position.x;
+                    const dz = playerMesh.position.z - b.position.z;
+                    const dist = Math.sqrt(dx * dx + dz * dz);
+                    
+                    if (dist < nearestDist2) {
+                        nearestDist2 = dist;
+                        nearestBuilding = b;
+                    }
+                });
+                
+                if (nearestBuilding) {
+                    const msg = currentLang === 'fa' 
+                        ? `این ${nearestBuilding.name.fa} هست. به زودی می‌تونی واردش شی!`
+                        : `This is a ${nearestBuilding.name.en}. You'll be able to enter soon!`;
+                    showDialog(nearestBuilding.name[currentLang], msg);
+                } else {
+                    const msg = currentLang === 'fa'
+                        ? 'چیزی نزدیکت نیست. برو جلوتر!'
+                        : 'Nothing nearby. Move closer!';
+                    showDialog(currentLang === 'fa' ? 'سیستم' : 'System', msg);
+                }
+            }
+        }
+
+        function showDialog(name, text) {
+            const dialogBox = document.getElementById('dialogBox');
+            document.getElementById('dialogName').innerHTML = `<span>👤</span><span>${name}</span>`;
+            document.getElementById('dialogText').textContent = text;
+            dialogBox.classList.add('active');
+            
+            if (document.exitPointerLock) document.exitPointerLock();
+        }
+
+        function closeDialog() {
+            document.getElementById('dialogBox').classList.remove('active');
+        }
+
+        // ============================================
+        // INTERACTION PROMPT
+        // ============================================
+        function checkInteractionPrompt() {
+            if (!playerMesh) return;
+            
+            let nearNPC = false;
+            let nearBuilding = false;
+            
+            npcs.forEach(npc => {
+                const dx = playerMesh.position.x - npc.position.x;
+                const dz = playerMesh.position.z - npc.position.z;
+                const dist = Math.sqrt(dx * dx + dz * dz);
+                
+                if (dist < 3.5) {
+                    nearNPC = true;
+                    const angle = Math.atan2(dx, dz);
+                    npc.mesh.rotation.y = angle;
+                }
+            });
+            
+            buildings.forEach(b => {
+                const dx = playerMesh.position.x - b.position.x;
+                const dz = playerMesh.position.z - b.position.z;
+                const dist = Math.sqrt(dx * dx + dz * dz);
+                
+                if (dist < 6) nearBuilding = true;
+            });
+            
+            const prompt = document.getElementById('interactPrompt');
+            if (nearNPC || nearBuilding) prompt.classList.add('show');
+            else prompt.classList.remove('show');
+        }
+
+        // ============================================
+        // GAME LOOP
+        // ============================================
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const delta = Math.min(clock.getDelta(), 0.1);
+            
+            updatePlayer(delta);
+            updateTime(delta);
+            updateCameraPosition();
+            checkInteractionPrompt();
+            
+            // NPC animation
+            npcs.forEach(npc => {
+                npc.phase += delta * 2;
+                npc.mesh.position.y = npc.baseY + Math.sin(npc.phase) * 0.05;
+            });
+            
+            // Street light glow
+            streetLights.forEach(({ lamp }) => {
+                if (lamp) lamp.material.emissiveIntensity = 0.8 + Math.sin(Date.now() * 0.003) * 0.2;
+            });
+            
+            if (renderer && scene && camera) renderer.render(scene, camera);
+        }
+
+        // ============================================
+        // UI / SCREENS
+        // ============================================
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function selectLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lastcity_lang', lang);
+            applyLanguage();
+            showScreen('screen-name');
+        }
+
+        function applyLanguage() {
+            const html = document.getElementById('htmlRoot');
+            
+            if (currentLang === 'fa') {
+                html.setAttribute('lang', 'fa');
+                html.setAttribute('dir', 'rtl');
+            } else {
+                html.setAttribute('lang', 'en');
+                html.setAttribute('dir', 'ltr');
+            }
+            
+            document.getElementById('nameTitle').textContent = t('nameTitle');
+            document.getElementById('nameSub').textContent = t('nameSub');
+            document.getElementById('nameInput').placeholder = t('namePlaceholder');
+            document.getElementById('nameBtnText').textContent = t('nameBtn');
+            
+            document.getElementById('guideTitle').textContent = t('guideTitle');
+            document.getElementById('guideSub').textContent = t('guideSub');
+            document.getElementById('gControlTitle').textContent = t('gControlTitle');
+            document.getElementById('gMove').textContent = t('gMove');
+            document.getElementById('gLook').textContent = t('gLook');
+            document.getElementById('gInteract').textContent = t('gInteract');
+            document.getElementById('gRun').textContent = t('gRun');
+            document.getElementById('gPause').textContent = t('gPause');
+            document.getElementById('gGoalTitle').textContent = t('gGoalTitle');
+            document.getElementById('gGoal1').textContent = t('gGoal1');
+            document.getElementById('gGoal2').textContent = t('gGoal2');
+            document.getElementById('gGoal3').textContent = t('gGoal3');
+            document.getElementById('gGoal4').textContent = t('gGoal4');
+            document.getElementById('gTipsTitle').textContent = t('gTipsTitle');
+            document.getElementById('gTip1').textContent = t('gTip1');
+            document.getElementById('gTip2').textContent = t('gTip2');
+            document.getElementById('gTip3').textContent = t('gTip3');
+            document.getElementById('guideBtnText').textContent = t('guideBtn');
+            
+            document.getElementById('hudStatus').textContent = t('statusOnline');
+            document.getElementById('interactText').textContent = t('interact');
+        }
+
+        function submitName() {
+            const input = document.getElementById('nameInput');
+            const name = input.value.trim();
+            
+            if (!name) return;
+            
+            playerName = name;
+            gameState.player.name = name;
+            localStorage.setItem('lastcity_name', name);
+            
+            document.getElementById('hudName').textContent = name;
+            document.getElementById('hudAvatar').textContent = name.charAt(0).toUpperCase();
+            
+            showScreen('screen-guide');
+        }
+
+        function startGame() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('gameCanvas').classList.add('active');
+            document.getElementById('hud').classList.add('active');
+            
+            if (window.innerWidth <= 768) {
+                document.getElementById('mobileControls').classList.add('active');
+            }
+            
+            initThreeJS();
+            setupInput();
+            setupMobileControls();
+            
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 500);
+        }
+
+        function openPause() {
+            if (document.exitPointerLock) document.exitPointerLock();
+            const msg = currentLang === 'fa' 
+                ? 'بازی متوقف شد. برای ادامه کلیک کن.'
+                : 'Game paused. Click to continue.';
+            showDialog(currentLang === 'fa' ? 'منو' : 'Menu', msg);
+        }
+
+        function toggleGuide() {
+            showScreen('screen-guide');
+            document.getElementById('guideBtnText').textContent = currentLang === 'fa' ? '▶️ ادامه بازی' : '▶️ Continue';
+            document.getElementById('guideBtn').onclick = () => {
+                document.getElementById('screen-guide').classList.remove('active');
+                if (document.body.requestPointerLock) document.body.requestPointerLock();
+            };
+        }
+
+        function saveGame() {
+            const saveData = {
+                name: gameState.player.name,
+                money: gameState.player.money,
+                position: gameState.player.position,
+                time: gameState.time
+            };
+            
+            localStorage.setItem('lastcity_save', JSON.stringify(saveData));
+            
+            const msg = currentLang === 'fa' ? '✅ بازی ذخیره شد!' : '✅ Game saved!';
+            showDialog(currentLang === 'fa' ? 'سیستم' : 'System', msg);
+        }
+
+        // ============================================
+        // MOBILE CONTROLS
+        // ============================================
+        function setupMobileControls() {
+            const joystick = document.getElementById('joystick');
+            const knob = document.getElementById('joystickKnob');
+            const interactBtn = document.getElementById('mobileInteract');
+            
+            if (!joystick) return;
+            
+            let active = false;
+            let centerX, centerY;
+            const maxDist = 40;
+            
+            const start = (e) => {
+                active = true;
+                const rect = joystick.getBoundingClientRect();
+                centerX = rect.left + rect.width / 2;
+                centerY = rect.top + rect.height / 2;
+                move(e);
+            };
+            
+            const move = (e) => {
+                if (!active) return;
+                e.preventDefault();
+                
+                const touch = e.touches ? e.touches[0] : e;
+                let dx = touch.clientX - centerX;
+                let dy = touch.clientY - centerY;
+                
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist > maxDist) {
+                    dx = (dx / dist) * maxDist;
+                    dy = (dy / dist) * maxDist;
+                }
+                
+                knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+                
+                const nx = dx / maxDist;
+                const ny = dy / maxDist;
+                
+                gameState.controls.keys['KeyW'] = ny < -0.3;
+                gameState.controls.keys['KeyS'] = ny > 0.3;
+                gameState.controls.keys['KeyA'] = nx < -0.3;
+                gameState.controls.keys['KeyD'] = nx > 0.3;
+            };
+            
+            const end = () => {
+                active = false;
+                knob.style.transform = 'translate(-50%, -50%)';
+                gameState.controls.keys['KeyW'] = false;
+                gameState.controls.keys['KeyS'] = false;
+                gameState.controls.keys['KeyA'] = false;
+                gameState.controls.keys['KeyD'] = false;
+            };
+            
+            joystick.addEventListener('touchstart', start, { passive: false });
+            joystick.addEventListener('touchmove', move, { passive: false });
+            joystick.addEventListener('touchend', end);
+            joystick.addEventListener('mousedown', start);
+            document.addEventListener('mousemove', move);
+            document.addEventListener('mouseup', end);
+            
+            if (interactBtn) interactBtn.addEventListener('click', handleInteract);
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('lastcity_lang');
+            if (savedLang) currentLang = savedLang;
+            
+            const savedName = localStorage.getItem('lastcity_name');
+            if (savedName) {
+                playerName = savedName;
+                gameState.player.name = savedName;
+                document.getElementById('hudName').textContent = savedName;
+                document.getElementById('hudAvatar').textContent = savedName.charAt(0).toUpperCase();
+            }
+            
+            const nameInput = document.getElementById('nameInput');
+            nameInput.addEventListener('input', () => {
+                document.getElementById('nameBtn').disabled = nameInput.value.trim().length === 0;
+            });
+            nameInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && nameInput.value.trim()) submitName();
+            });
+            
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 1000);
+            
+            applyLanguage();
+        });
+    </script>
+
+</body>
+</html>
